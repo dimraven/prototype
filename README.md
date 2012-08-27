@@ -35,7 +35,7 @@ The Player class looks like this on the C++ side:
             Script::invoke(this, "onUpdateTick");
         }
         
-        void moveTo(Vector2& pos)
+        void moveTo(Player* target)
         {
             // Move towards position
         }
@@ -82,13 +82,25 @@ Here is an example of Lua:
     end
     
     function AIPlayer:attack(target)
-        self:moveTo(target:getPosition())
+        self:moveTo(target)
     end
     
     local aiPlayer = AIPlayer()
     aiPlayer:attack(player)
 
-### How do we prevent deleted objects from being called or referenced? ###
+The aiPlayer instance is still an instance of the class **Player**. But we now have the option of overloading
+all the **script** methods associated with **Player**. If we would perform something like this:
+
+    local player = Player()
+    local aiPlayer = AIPlayer()
+    
+    player:moveTo(aiPlayer)
+    
+The "target" parameter available in the "moveTo" method whould be an instance of the Player class but with
+a the AIPlayer script methods associated with it.
+    
+
+### How does it work and how do we prevent deleted objects from being called or referenced? ###
 
 A problem I had to solve early on was which side was the master of the creation and deletion of the memory of
 "scriptable" instances. The solution I ended up with was something of a hybrid. When a new instance is created and
