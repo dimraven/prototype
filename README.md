@@ -24,6 +24,7 @@ The player class is also invoking the method "onUpdateTick" via the c++ method. 
 How does that look like in LUA using this library?
 
 Here is an example of Lua:
+
     -- Create a player instance and move it to position x,y {10,10}
     local player = Player()
     player:moveToPos({10, 10})
@@ -49,6 +50,7 @@ Here is an example of Lua:
     aiPlayer:attack(player)
 
 Here is an example of C++:
+
     class Player : public ScriptObject
     {
     public:
