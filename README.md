@@ -7,13 +7,14 @@ A library for prototyping c++ class using Lua (from Lua's point of view).
 Although the name can be "slightly" missleading, it's purpose is straight on. The purpose of this library
 is to enable the developer to prototype and extend exposed c++ class methods using the scripting language: Lua.
 
-I've planned on using this library for a game engine i've planned to develop later and a scripting language
-is a must when doing that. This project is in reality a project for myself learning the Lua API but if the end
-result can be of use for other people then that would be awesome.
+I've planned on using this library for a game engine that i've planned on developing layer on. Integration with
+a scripting language is of course required when doing this. This project is in reality a self-learning project 
+for myself so that I can learn how the Lua API works, but if some other developer can use this or learn something from
+this then that would be awesome.
 
-Note that it doens't replace pure c++ functions, but it extends methods that are called using the supplied "invoke" 
-functionality (So it does not solve the world-hunger problem). But it gives us power of rapid development before
-the optimization stage (where we move our code from script to complied code).
+Note that this library doens't give you the power of replacing pure c++ classes and methods. What it does is
+that it give you the power of extending methods "invoked" using a supplied interface (No - it does not solve the world-hunger problem). 
+It gives us power of rapid development before the optimization stage (where we move our code from script to complied code) when developing a game.
 
 ### How does it work ###
 
