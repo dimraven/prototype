@@ -74,7 +74,7 @@ Here is an example of Lua:
     -- to achieve the result wew ant.
     AIPlayer = class(Player, function(self)
         -- This must be done to associate this object's "self" reference with the
-        -- newely created player instance. The value is set to self._instance.
+        -- newely created player instance. The pointer of the player instance is set to self._instance.
         Player.init(self)
     end)
     
