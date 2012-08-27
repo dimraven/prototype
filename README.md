@@ -55,6 +55,7 @@ Here is an example of C++:
     {
     public:
         DEFINE_SCRIPT_OBJECT(Player);
+        
         Player();
         virtual ~Player();
         
@@ -72,7 +73,33 @@ Here is an example of C++:
         {
             return mPosition;
         }
+    private:
+        Vector2 mPosition;
     };
+
+How do we prevent objects from being deleted?
+---------------------------------------------
+
+A problem I had to solve early on was which side was the master of the creation and deletion of the memory of
+"scriptable" instances. The solution I ended up with was something of a hybrid. When a new instance is created and
+**registered** it creates a Lua table internally and keeps it's reference using (luaL_ref). We then put the instance
+and the className inside it. If we would create it using Lua it would look like this:
+
+    local table = {
+        _instance = <userdata: new Player()>,
+        _className = "Player"
+    }
+
+When the object is **unregistered** and deleted on the C++ side it will set the **_instance** value to nil, which means
+that we can prevent unneccessary null pointer exceptions. After the unregistration the table look like this:
+
+    local table = {
+        _instance = nil,
+        _className = "Player"
+    }
+
+As you probably understand at this point is that it is only the C++ instance that's been deleted and NOT the Lua
+table. I've let Lua's garbage collector handle the cleaning up of those objects.
 
 Credits
 -------
