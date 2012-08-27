@@ -15,8 +15,8 @@ Note that it doens't replace pure c++ functions, but it extends methods that are
 functionality (So it does not solve the world-hunger problem). But it gives us power of rapid development before
 the optimization stage (where we move our code from script to complied code).
 
-How does it work
-----------------
+### How does it work ###
+
 Let's look at the non-library code for the moment before examining the how it integrates via C++. Lets assume that we have a
 C++ class called "Player". Using that class as a base class we've decided to prototype an new AI player class.
 
@@ -88,8 +88,7 @@ Here is an example of Lua:
     local aiPlayer = AIPlayer()
     aiPlayer:attack(player)
 
-How do we prevent deleted objects from being called or referenced?
-------------------------------------------------------------------
+### How do we prevent deleted objects from being called or referenced? ###
 
 A problem I had to solve early on was which side was the master of the creation and deletion of the memory of
 "scriptable" instances. The solution I ended up with was something of a hybrid. When a new instance is created and
@@ -128,8 +127,7 @@ prints an error message in the output console. Here is an example in Lua:
     delete(player)
     print(player:getPosition()) -- output: Cannot call object: Values is deleted.
 
-Functions added to lua
-----------------------
+### Functions added to lua ###
 
 We can't rely on the garbage collector to delete the associated userdata even if it only exist on the script side. 
 This is because we cannot know for sure that any references still exist anywhere on the compiled side of the application.
@@ -151,14 +149,13 @@ The delete function can take any number of [1, n) arguments. Internally the dele
         }
     }
 
-Future plans
--------------
+### Future plans ###
 
 I have plans on reviewing if boost shared pointer is usable, but the problem still exist that we in that 
 case are required to trust/wait for the garbage collector to delete all the potential instances of the associated table.
 It might not be usable, but we'll see. It might be possible.
 
 
-Credits
--------
+### Credits ###
+
 http://www.lua.org - The Programming Language Lua.
