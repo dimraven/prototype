@@ -54,8 +54,13 @@ The Player class looks like this on the C++ side:
         Vector2 mPosition;
     };
 
-The methods **moveTo**, **getPosition** and findEnemiesAroundMe are exposed to the Script side. 
-The **onUpdateTick** is called 32 times / second.
+The exposed methods are:
+* moveTo
+* getPosition
+* findEnemiesAroundMe
+
+The methods we are calling on the script side are:
+* onUpdateTick (called 32 times / second).
 
 Here is an example of Lua:
 
