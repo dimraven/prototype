@@ -2,7 +2,7 @@ prototype
 =========
 A library for prototyping c++ class using Lua (from Lua's point of view).
 
-## What is prototype ##
+### What is prototype ###
 
 Although the name can be "slightly" missleading, it's purpose is straight on. The purpose of this library
 is to enable the developer to prototype and extend exposed c++ class methods using the scripting language: Lua.
