@@ -64,16 +64,20 @@ The methods we are calling on the script side are:
 
 Here is an example of Lua:
 
+    require "class"
+
     -- We begin by create a player instance and move it to position x,y {10,10}
     local player = Player()
     player:moveToPos({10, 10})
     
-    -- Extend the Player and copy it's exposed methods to a new class
+    -- Extend the Player class, copy it's exposed methods and extend the methods we want
+    -- to achieve the result wew ant.
     AIPlayer = class(Player, function(self)
+        -- This must be done to associate this object's "self" reference with the
+        -- newely created player instance. The value is set to self._instance.
         Player.init(self)
     end)
     
-    -- Extend a method we know is invoked from C++.
     function AIPlayer:onUpdateTick()
         local enemies = self:findEnemiesAroundMe()
         if enemies then
@@ -85,6 +89,7 @@ Here is an example of Lua:
         self:moveTo(target)
     end
     
+    -- Extend the AIPlayer class with a smarted AI class.
     SmartAIPlayer = class(AIPlayer, function(self)
         AIPlayer.init(self)
         self.sleeping = true
