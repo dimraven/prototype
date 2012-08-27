@@ -117,7 +117,7 @@ Here is an example of Lua:
     smartAIPlayer:attack(player)
 
 The aiPlayer- and the smartAIPlayer instance is still an instance of the class **Player**. But we now have the option of overloading
-all the **script** methods associated with **Player** and any other class in the method hierarchy.
+all the **script** methods associated with **Player** class and any other classes in the inheritance hierarchy.
 If we would perform something like this (Example in Lua):
 
     local player = Player()
