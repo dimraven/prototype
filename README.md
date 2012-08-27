@@ -93,8 +93,8 @@ How do we prevent deleted objects from being called or referenced?
 
 A problem I had to solve early on was which side was the master of the creation and deletion of the memory of
 "scriptable" instances. The solution I ended up with was something of a hybrid. When a new instance is created and
-**registered** it creates a Lua table internally and keeps it's reference using (**luaL_ref**). We then put the instance
-and the className inside it. If we would create it using Lua it would look like this:
+**registered** it creates a Lua table internally and keeps it's reference using **luaL_ref**. We then put the instance
+in it as lightuserdata and the className as a string inside it. If we would create it using Lua it would look like this:
 
     local table = {
         _instance = <userdata: new Player()>,
