@@ -156,10 +156,11 @@ To register and expose a class from the C++ side we only need to do this:
     Player* player = new Player();
     player->registerObject();
 
-We can now send it to the script side without being afraid of it being deleted (and cause a crash). 
+We can now send it to the script side without being afraid of it being deleted (and cause a crash).
 
-A deletion of the player instance is of course still okay, but accessing a deleted object simply 
-prints an error message in the output console. Here is an example in Lua:
+A deletion of the player instance after this is of course okay. Accessing deleted objects C++ related functionality 
+will not crash the application. It will instead prints out an error message in the output console. 
+Here is an example in Lua:
 
     -- Example:
     local player = Player()
