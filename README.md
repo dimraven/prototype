@@ -21,9 +21,27 @@ Let's look at the LUA side for the moment before examining the how it integrates
 C++ class called "Player". But we decided to extend the method "onUpdateTick" which is called 32 times / second. 
 How does that look like in LUA using this library?
 
-´´´lua
-
-´´´
+    -- Create a player instance and move it to position x,y {10,10}
+    local player = Player()
+    player:moveToPos({10, 10})
+    
+    AIPlayer = class(Player, function(self)
+        Player.init(self)
+    end)
+    
+    function AIPlayer:onUpdateTick()
+        local enemies = self:findEnemiesAroundMe()
+        if enemies then
+            attack(enemies)
+        end
+    end
+    
+    function AIPlayer:attack(target)
+        self:moveTo(target:getPosition())
+    end
+    
+    local aiPlayer = AIPlayer()
+    aiPlayer:attack(player)
 
 Credits
 -------
