@@ -11,6 +11,20 @@ I've planned on using this library for a game engine i've planned to develop lat
 is a must when doing that. This project is in reality a project for myself learning the LUA API but if the end
 result can be of use for other people then that would be awesome.
 
+Note that it doens't replace pure c++ functions, but it extends methods that are called using the supplied "invoke" 
+functionality (So it does not solve the world-hunger problem). But it gives us power of rapid development before
+the optimization stage (where we move our code from script to complied code).
+
+How does it work
+----------------
+Let's look at the LUA side for the moment before examining the how it integrates via C++. Lets assume that we have a
+C++ class called "Player". But we decided to extend the method "onUpdateTick" which is called 32 times / second. 
+How does that look like in LUA using this library?
+
+´´´lua
+
+´´´
+
 Credits
 -------
 http://www.lua.org - The Programming Language Lua.
