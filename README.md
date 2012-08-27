@@ -131,17 +131,25 @@ prints an error message in the output console. Here is an example in Lua:
 Functions added to lua
 ----------------------
 
-We can't rely on the garbage collector to delete the userdata, even if it only exist on the script side. This is
-because we cannot know for sure if we have any references existing somewhere in the compiled code. This means that
-to delete the userdata (**_instance**) associated with the table we have to manually delete it. A function has therefore
-been added simply called **delete**. Example in Lua:
+We can't rely on the garbage collector to delete the associated userdata even if it only exist on the script side. 
+This is because we cannot know for sure that any references still exist anywhere on the compiled side of the application.
+It is therefore up to the programmer to handle this by using a **delete** function. Example in Lua:
 
     -- Created instances
     local player1 = Player()
     local player2 = Player()
     delete(player1, player2)
 
-The delete function can take any number of [1, n) arguments.
+The delete function can take any number of [1, n) arguments. Internally the delete function does something like this (Pseudo code):
+
+    void delete(list_of_objects objs)
+    {
+        foreach objs as obj
+        {
+            obj.unregister();
+            delete obj;
+        }
+    }
 
 Credits
 -------
