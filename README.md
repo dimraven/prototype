@@ -21,7 +21,7 @@ Let's look at the Lua side for the moment before examining the how it integrates
 C++ class called "Player". But we decided to prototype an AI player class using the Player class as a base class.
 
 The player class is also invoking the method "onUpdateTick" via the c++ method. It is called 32 times / second.
-How does that look like in LUA using this library?
+How does that look like in Lua using this library?
 
 Here is an example of Lua:
 
@@ -82,7 +82,7 @@ How do we prevent objects from being deleted?
 
 A problem I had to solve early on was which side was the master of the creation and deletion of the memory of
 "scriptable" instances. The solution I ended up with was something of a hybrid. When a new instance is created and
-**registered** it creates a Lua table internally and keeps it's reference using (luaL_ref). We then put the instance
+**registered** it creates a Lua table internally and keeps it's reference using (**luaL_ref**). We then put the instance
 and the className inside it. If we would create it using Lua it would look like this:
 
     local table = {
