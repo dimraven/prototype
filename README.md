@@ -151,6 +151,14 @@ The delete function can take any number of [1, n) arguments. Internally the dele
         }
     }
 
+Future plans
+-------------
+
+I have plans on reviewing if boost shared pointer is usable, but the problem still exist that we in that 
+case are required to trust/wait for the garbage collector to delete all the potential instances of the associated table.
+It might not be usable, but we'll see. It might be possible.
+
+
 Credits
 -------
 http://www.lua.org - The Programming Language Lua.
