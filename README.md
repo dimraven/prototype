@@ -132,8 +132,10 @@ but with the AIPlayer script methods associated with it.
 
 A problem I had to solve early on was which side was the master of the creation and deletion of the memory of
 "scriptable" instances. The solution I ended up with was something of a hybrid. When a new instance is created and
-**registered** it creates a Lua table internally and keeps it's reference using **luaL_ref**. We then put the instance
-in it as lightuserdata and the className as a string inside it. If we would create it using Lua it would look like this:
+**registered** it creates a new Lua table, retrieves a reference of it using the **luaL_ref** and assings the metatable 
+containing the exposed C++ classes to it. We put the pointer to the new instance in the table with the key **_instance** as
+a lightuserdata. We also set the className so that we can handle pointer casting on the C++ side in a "somewhat" reliable manner. 
+The table would look something like this if we where to create it using lua:
 
     local table = {
         _instance = <userdata: new Player()>,
@@ -149,7 +151,7 @@ that we can prevent unneccessary null pointer exceptions. After the unregistrati
     }
 
 As you probably understand at this point is that it is only the C++ instance that's been deleted and NOT the Lua
-table. I've let Lua's garbage collector handle the cleaning up of those objects.
+table. I've decided to let Lua's garbage collector handle the cleaning up of those objects.
 
 To register and expose a class from the C++ side we only need to do this:
 
@@ -195,6 +197,10 @@ The delete function can take any number of [1, n) arguments. Internally the dele
 I have plans on reviewing if boost shared pointer is usable, but the problem still exist that we in that 
 case are required to trust/wait for the garbage collector to delete all the potential instances of the associated table.
 It might not be usable, but we'll see. It might be possible.
+
+I also have to implement some kind of failsafe mechanism if the user deletes a scriptable object without unregistering it.
+If the application crashes then we should at least give the developer a understandable error so that it can be fixed 
+and prevented in the future.
 
 
 ### Credits ###
