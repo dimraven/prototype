@@ -17,7 +17,7 @@ the optimization stage (where we move our code from script to complied code).
 
 How does it work
 ----------------
-Let's look at the Lua side for the moment before examining the how it integrates via C++. Lets assume that we have a
+Let's look at the non-library code for the moment before examining the how it integrates via C++. Lets assume that we have a
 C++ class called "Player". Using that class as a base class we've decided to prototype an new AI player class.
 
 The Player class looks like this on the C++ side:
