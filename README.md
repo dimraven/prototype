@@ -112,6 +112,21 @@ that we can prevent unneccessary null pointer exceptions. After the unregistrati
 As you probably understand at this point is that it is only the C++ instance that's been deleted and NOT the Lua
 table. I've let Lua's garbage collector handle the cleaning up of those objects.
 
+To register and expose a class from the C++ side we only need to do this:
+
+    Player* player = new Player();
+    player->registerObject();
+
+We can now send it to the script side without being afraid of it being deleted (and cause a crash). A deletion of the 
+player instance is of course still okay, but accessing a deleted object simply prints an error message in the
+output console:
+
+    -- Example:
+    local player = Player()
+    print(player:getPosition()) -- output: {<x_value>, <y_value>}
+    delete(player)
+    print(player:getPosition()) -- output: Cannot call object: Values is deleted.
+
 Credits
 -------
 http://www.lua.org - The Programming Language Lua.
