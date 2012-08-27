@@ -18,38 +18,9 @@ the optimization stage (where we move our code from script to complied code).
 How does it work
 ----------------
 Let's look at the Lua side for the moment before examining the how it integrates via C++. Lets assume that we have a
-C++ class called "Player". But we decided to prototype an AI player class using the Player class as a base class.
+C++ class called "Player". Using that class as a base class we've decided to prototype an new AI player class.
 
-The player class is also invoking the method "onUpdateTick" via the c++ method. It is called 32 times / second.
-How does that look like in Lua using this library?
-
-Here is an example of Lua:
-
-    -- Create a player instance and move it to position x,y {10,10}
-    local player = Player()
-    player:moveToPos({10, 10})
-    
-    -- Extend the Player and copy it's exposed methods to a new class
-    AIPlayer = class(Player, function(self)
-        Player.init(self)
-    end)
-    
-    -- Extend a method we know is invoked from C++.
-    function AIPlayer:onUpdateTick()
-        local enemies = self:findEnemiesAroundMe()
-        if enemies then
-            attack(enemies)
-        end
-    end
-    
-    function AIPlayer:attack(target)
-        self:moveTo(target:getPosition())
-    end
-    
-    local aiPlayer = AIPlayer()
-    aiPlayer:attack(player)
-
-Here is an example of C++:
+The Player class looks like this on the C++ side:
 
     class Player : public ScriptObject
     {
@@ -73,12 +44,47 @@ Here is an example of C++:
         {
             return mPosition;
         }
+        
+        std::list<Player*> findEnemiesAroundMe()
+        {
+            return SceneGraph::scanForObjects(mPosition);
+        }
+        
     private:
         Vector2 mPosition;
     };
 
-How do we prevent objects from being deleted?
----------------------------------------------
+The methods **moveTo**, **getPosition** and findEnemiesAroundMe are exposed to the Script side. 
+The **onUpdateTick** is called 32 times / second.
+
+Here is an example of Lua:
+
+    -- We begin by create a player instance and move it to position x,y {10,10}
+    local player = Player()
+    player:moveToPos({10, 10})
+    
+    -- Extend the Player and copy it's exposed methods to a new class
+    AIPlayer = class(Player, function(self)
+        Player.init(self)
+    end)
+    
+    -- Extend a method we know is invoked from C++.
+    function AIPlayer:onUpdateTick()
+        local enemies = self:findEnemiesAroundMe()
+        if enemies then
+            attack(enemies)
+        end
+    end
+    
+    function AIPlayer:attack(target)
+        self:moveTo(target:getPosition())
+    end
+    
+    local aiPlayer = AIPlayer()
+    aiPlayer:attack(player)
+
+How do we prevent deleted objects from being called or referenced?
+------------------------------------------------------------------
 
 A problem I had to solve early on was which side was the master of the creation and deletion of the memory of
 "scriptable" instances. The solution I ended up with was something of a hybrid. When a new instance is created and
