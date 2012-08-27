@@ -85,20 +85,42 @@ Here is an example of Lua:
         self:moveTo(target)
     end
     
+    SmartAIPlayer = class(AIPlayer, function(self)
+        AIPlayer.init(self)
+        self.sleeping = true
+    end)
+    
+    function SmartAIPlayer:onUpdateTick()
+        if not self.sleeping then
+            AIPlayer.onUpdateTick(self)
+        end
+    end
+    
+    function AIPlayer:attack(target)
+        local distance = self:getPosition():distanceTo(target:getPosition())
+        if distance > 50.0 then
+            self.sleeping = false
+            self:moveTo(target)
+        end
+    end
+    
     local aiPlayer = AIPlayer()
     aiPlayer:attack(player)
+    
+    local smartAiPlayer = SmartAIPlayer()
+    smartAIPlayer:attack(player)
 
-The aiPlayer instance is still an instance of the class **Player**. But we now have the option of overloading
-all the **script** methods associated with **Player**. If we would perform something like this:
+The aiPlayer- and the smartAIPlayer instance is still an instance of the class **Player**. But we now have the option of overloading
+all the **script** methods associated with **Player** and any other class in the method hierarchy.
+If we would perform something like this (Example in Lua):
 
     local player = Player()
     local aiPlayer = AIPlayer()
     
     player:moveTo(aiPlayer)
     
-The "target" parameter available in the "moveTo" method whould be an instance of the Player class but with
-a the AIPlayer script methods associated with it.
-    
+The "target" parameter available in the "moveTo" method on the C++ side whould still be an instance of the Player class 
+but with the AIPlayer script methods associated with it.
 
 ### How does it work and how do we prevent deleted objects from being called or referenced? ###
 
