@@ -128,6 +128,21 @@ prints an error message in the output console. Here is an example in Lua:
     delete(player)
     print(player:getPosition()) -- output: Cannot call object: Values is deleted.
 
+Functions added to lua
+----------------------
+
+We can't rely on the garbage collector to delete the userdata, even if it only exist on the script side. This is
+because we cannot know for sure if we have any references existing somewhere in the compiled code. This means that
+to delete the userdata (**_instance**) associated with the table we have to manually delete it. A function has therefore
+been added simply called **delete**. Example in Lua:
+
+    -- Created instances
+    local player1 = Player()
+    local player2 = Player()
+    delete(player1, player2)
+
+The delete function can take any number of [1, n) arguments.
+
 Credits
 -------
 http://www.lua.org - The Programming Language Lua.
