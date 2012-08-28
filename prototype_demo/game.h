@@ -27,7 +27,7 @@ public:
 
 	//
 	// Method called when the object is deleted
-	virtual void onDelete();
+	virtual void onRemove();
 };
 
 #endif

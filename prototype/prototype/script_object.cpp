@@ -88,7 +88,7 @@ namespace prototype
 		assert(mScriptRef != 0 && "You are trying to unregister the same object twice");
 		assert(mCurrentState != NULL && "You are trying to unregister the same object twice");
 
-		onDelete();
+		onRemove();
 		
 		// Set _instance to nil
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
@@ -111,7 +111,7 @@ namespace prototype
 		return true;
 	}
 
-	void ScriptObject::onDelete()
+	void ScriptObject::onRemove()
 	{
 		invokeMethod("onDelete", 10);
 	}

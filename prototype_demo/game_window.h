@@ -19,9 +19,14 @@ public:
 	GameWindow();
 	virtual ~GameWindow();
 
+	virtual bool onAdd();
+	virtual void onRemove();
+
 	//
 	// Shows this game window
-	void open();
+	// @param width
+	// @param height
+	void open(int width, int height);
 
 	//
 	// Closes a game window

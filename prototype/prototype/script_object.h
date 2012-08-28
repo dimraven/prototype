@@ -57,7 +57,7 @@ namespace prototype
 
 		//
 		// Method called before this object is being unregistered by the script engine
-		virtual void onDelete();
+		virtual void onRemove();
 
 	};
 

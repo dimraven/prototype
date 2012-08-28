@@ -7,7 +7,7 @@ end)
 
 function AstroidsGame:start()
 	local window = GameWindow()
-	window:open()
+	window:open(1024, 768)
 
 	-- Create our game objects
 	local ship = Ship("John Doe", 10.0, 100)

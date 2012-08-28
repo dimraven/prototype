@@ -136,7 +136,7 @@ namespace prototype
 		{
 			method_pointer_wrapper_void_2args<Clazz, P1, P2>* wrapper = 
 				new method_pointer_wrapper_void_2args<Clazz, P1, P2>();
-			wrapper->methodPtr = MethodPtr;
+			wrapper->methodPtr = methodPtr;
 			wrapper->func = &lua_method_void_2args<Clazz, P1, P2>;
 			
 			addMethod(mState, methodName, wrapper);
@@ -148,7 +148,7 @@ namespace prototype
 		{
 			method_pointer_wrapper_void_3args<Clazz, P1, P2, P3>* wrapper = 
 				new method_pointer_wrapper_void_3args<Clazz, P1, P2, P3>();
-			wrapper->methodPtr = MethodPtr;
+			wrapper->methodPtr = methodPtr;
 			wrapper->func = &lua_method_void_3args<Clazz, P1, P2, P3>;
 			
 			addMethod(mState, methodName, wrapper);
@@ -160,7 +160,7 @@ namespace prototype
 		{
 			method_pointer_wrapper_void_4args<Clazz, P1, P2, P3, P4>* wrapper = 
 				new method_pointer_wrapper_void_4args<Clazz, P1, P2, P3, P4>();
-			wrapper->methodPtr = MethodPtr;
+			wrapper->methodPtr = methodPtr;
 			wrapper->func = &lua_method_void_4args<Clazz, P1, P2, P3>;
 			
 			addMethod(mState, methodName, wrapper);
@@ -198,7 +198,7 @@ namespace prototype
 		{
 			method_pointer_wrapper_R_2args<Clazz, R, P1, P2>* wrapper = 
 				new method_pointer_wrapper_R_2args<Clazz, R, P1, P2>();
-			wrapper->methodPtr = MethodPtr;
+			wrapper->methodPtr = methodPtr;
 			wrapper->func = &lua_method_R_2args<Clazz, R, P1, P2>;
 			
 			addMethod(mState, methodName, wrapper);
@@ -210,7 +210,7 @@ namespace prototype
 		{
 			method_pointer_wrapper_R_3args<Clazz, R, P1, P2, P3>* wrapper = 
 				new method_pointer_wrapper_R_3args<Clazz, R, P1, P2, P3>();
-			wrapper->methodPtr = MethodPtr;
+			wrapper->methodPtr = methodPtr;
 			wrapper->func = &lua_method_R_3args<Clazz, R, P1, P2, P3>;
 			
 			addMethod(mState, methodName, wrapper);
@@ -222,7 +222,7 @@ namespace prototype
 		{
 			method_pointer_wrapper_R_4args<Clazz, R, P1, P2, P3, P4>* wrapper = 
 				new method_pointer_wrapper_R_4args<Clazz, R, P1, P2, P3, P4>();
-			wrapper->methodPtr = MethodPtr;
+			wrapper->methodPtr = methodPtr;
 			wrapper->func = &lua_method_R_4args<Clazz, R, P1, P2, P3>;
 			
 			addMethod(mState, methodName, wrapper);

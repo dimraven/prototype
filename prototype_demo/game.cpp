@@ -15,6 +15,6 @@ bool Game::onAdd()
 	return true;
 }
 
-void Game::onDelete()
+void Game::onRemove()
 {
 }
