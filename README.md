@@ -26,7 +26,7 @@ The Player class looks like this on the C++ side:
     class Player : public ScriptObject
     {
     public:
-        DEFINE_SCRIPT_OBJECT(Player);
+        DEFINE_SCRIPT_OBJECT(Player, ScriptObject);
         
         Player();
         virtual ~Player();
@@ -71,8 +71,7 @@ Here is an example of Lua:
     local player = Player()
     player:moveToPos({10, 10})
     
-    -- Extend the Player class, copy it's exposed methods and extend the methods we want
-    -- to achieve the result wew ant.
+    -- Extend the Player class and copy it's exposed methods. We can now extend any exposed the methods we want.
     AIPlayer = class(Player, function(self)
         -- This must be done to associate this object's "self" reference with the
         -- newely created player instance. The pointer of the player instance is set to self._instance.
@@ -102,11 +101,21 @@ Here is an example of Lua:
         end
     end
     
-    function AIPlayer:attack(target)
+    function SmartAIPlayer:attack(target)
         local distance = self:getPosition():distanceTo(target:getPosition())
         if distance > 50.0 then
             self.sleeping = false
             self:moveTo(target)
+        end
+    end
+    
+    function SmartAIPlayer:moveTo(target)
+        if self.somereason then
+            -- This will call the c++ exposed method since it's not
+            -- overloaded in the AIPlayer class. This method is only
+            -- executed when calling the function from Lua and not when calling
+            -- "Player* player = ...; player->moveTo(target);"
+            AIPlayer.moveTo(self)
         end
     end
     
