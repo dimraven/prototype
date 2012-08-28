@@ -8,6 +8,8 @@ using namespace prototype;
 #include "game.h"
 #include "game_object.h"
 #include "game_window.h"
+#include "behaviour.h"
+
 /*
 int old_mode;
 
@@ -47,7 +49,10 @@ int main()
 		.addMethod("open", &GameWindow::open)
 		.addMethod("close", &GameWindow::close);
 	Script::bind<DrawableObject>();
-	Script::bind<GameObject>();
+	Script::bind<GameObject>()
+		.addMethod("addBehaviour", &GameObject::addBehaviour)
+		.addMethod("removeBehaviour", &GameObject::removeBehaviour);
+	Script::bind<Behaviour>();
 
 	// 3. Load and execute the lua main file
 	Script::loadFile("main.lua");

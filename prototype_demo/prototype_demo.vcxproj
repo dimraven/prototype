@@ -40,15 +40,15 @@
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)out\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
-    <IncludePath>../lib/lua/include;../prototype;$(IncludePath)</IncludePath>
-    <LibraryPath>../lib/lua;../bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>../lib/lua/lua-5.2.1/src;../prototype;$(IncludePath)</IncludePath>
+    <LibraryPath>../lib/lua/lua-5.2.1/lib;../bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)out\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>../lib/lua/include;../prototype;$(IncludePath)</IncludePath>
-    <LibraryPath>../lib/lua;../bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>../lib/lua/lua-5.2.1/src;../prototype;$(IncludePath)</IncludePath>
+    <LibraryPath>../lib/lua/lua-5.2.1/lib;../bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -61,7 +61,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>prototype_d.lib;lua5.1.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>prototype_d.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,10 +79,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>prototype.lib;lua5.1.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>prototype.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="behaviour.cpp" />
     <ClCompile Include="drawable_object.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game_object.cpp" />
@@ -90,6 +91,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="behaviour.h" />
     <ClInclude Include="drawable_object.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="game_object.h" />

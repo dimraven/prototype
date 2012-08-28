@@ -113,9 +113,10 @@ namespace prototype
 				if(lua_isuserdata(L, -1))
 				{
 					void* userdata = lua_touserdata(L, -1);
-					value = reinterpret_cast<Clazz*>(userdata);
+					ScriptReference* refValue = reinterpret_cast<ScriptReference*>(userdata);
+					value = dynamic_cast<Clazz*>(refValue);
 					lua_pop(L, 1);
-					return true;
+					return value != NULL;
 				}
 				lua_pop(L, 1);
 				return false;

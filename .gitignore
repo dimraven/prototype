@@ -7,7 +7,9 @@ prototype.opensdf
 lib/lua/lua-5.2.1/build/*
 lib/lua/lua-5.2.1/doc/*
 lib/lua/lua-5.2.1/src/*
+lib/lua/lua-5.2.1/lib/*
 lib/lua/lua-5.2.1/lua-vs2010.sdf
 lib/lua/lua-5.2.1/lua-vs2010.suo
 lib/lua/lua-5.2.1/Makefile
 lib/lua/lua-5.2.1/README
+*.vcxproj.user

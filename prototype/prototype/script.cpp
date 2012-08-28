@@ -28,7 +28,7 @@ namespace prototype
 
 	void Script::initialize()
 	{
-		gLuaState = lua_open();
+		gLuaState = luaL_newstate();
 		luaL_openlibs(gLuaState);
 
 		// Make sure that delete is available in lua

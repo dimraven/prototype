@@ -36,7 +36,8 @@ namespace prototype
 		mScriptRef = getClassDef()->createScriptRepresentation(mCurrentState);
 		
 		// Set _instacne 
-		lua_getref(mCurrentState, mScriptRef);
+		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+		//lua_getref(mCurrentState, mScriptRef);
 		lua_pushstring(mCurrentState, "_instance");
 		lua_pushlightuserdata(mCurrentState, this);
 		lua_settable(mCurrentState, -3);
@@ -59,7 +60,8 @@ namespace prototype
 		mScriptRef = refId;
 		mCurrentState = gLuaState;
 		
-		lua_getref(mCurrentState, mScriptRef);
+		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+		//lua_getref(mCurrentState, mScriptRef);
 		lua_pushstring(mCurrentState, "_instance");
 		lua_pushlightuserdata(mCurrentState, this);
 		lua_settable(mCurrentState, -3);
@@ -89,13 +91,15 @@ namespace prototype
 		onDelete();
 		
 		// Set _instance to nil
-		lua_getref(mCurrentState, mScriptRef);
+		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+		//lua_getref(mCurrentState, mScriptRef);
 		lua_pushstring(mCurrentState, "_instance");
 		lua_pushnil(mCurrentState);
 		lua_rawset(mCurrentState, -3);
 		lua_pop(mCurrentState, 1);
 
-		lua_unref(mCurrentState, mScriptRef);
+		luaL_unref(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+		//lua_unref(mCurrentState, mScriptRef);
 
 		mScriptRef = 0;
 		mCurrentState = NULL;

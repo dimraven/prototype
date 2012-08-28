@@ -65,7 +65,9 @@ namespace prototype
 			lua_newtable(L); 
 			scriptRef = luaL_ref(L, LUA_REGISTRYINDEX);
 		
-			lua_getref(L, scriptRef);
+			
+			lua_rawgeti(L, LUA_REGISTRYINDEX, scriptRef);
+			//lua_getref(L, scriptRef);
 			lua_pushvalue(L, -1);
 			lua_setfield(L, -2, "__index");
 			luaL_getmetatable(L, mMetaTableName.c_str());
@@ -249,13 +251,15 @@ namespace prototype
 			lua_pop(L, 1);
 
 			luaL_getmetatable(L, mMetaTableName.c_str());
-			luaL_register(L, NULL, requiredFuncs);
+			luaL_setfuncs(L, requiredFuncs, 0);
+			//luaL_register(L, NULL, requiredFuncs);
 			lua_pop(L, 1);
 
 			lua_newtable(L);
 			luaL_getmetatable(L, mMetaTableName.c_str());
 			lua_setmetatable(L, -2 );
-			luaL_register(L, NULL, requiredFuncs);
+			luaL_setfuncs(L, requiredFuncs, 0);
+			//luaL_register(L, NULL, requiredFuncs);
 			lua_setglobal(L, mClassName.c_str());
 
 			// Inheritance?

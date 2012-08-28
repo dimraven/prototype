@@ -10,11 +10,11 @@ function AstroidsGame:start()
 	window:open()
 
 	-- Create our game objects
-	local ship = Ship()
+	local ship = Ship("John Doe", 10.0, 100)
 
-	self:addGameObject(ship)
+	-- self:addGameObject(ship)
 
-	delete(player)
+	delete(ship)
 	delete(window)
 end
 

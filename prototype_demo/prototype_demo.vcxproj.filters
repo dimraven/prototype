@@ -29,6 +29,9 @@
     <ClCompile Include="drawable_object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="behaviour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_object.h">
@@ -41,6 +44,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="drawable_object.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="behaviour.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

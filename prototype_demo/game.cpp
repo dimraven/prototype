@@ -9,3 +9,12 @@ Game::Game()
 Game::~Game()
 {
 }
+
+bool Game::onAdd()
+{
+	return true;
+}
+
+void Game::onDelete()
+{
+}

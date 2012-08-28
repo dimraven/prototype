@@ -20,6 +20,14 @@ public:
 public:
 	Game();
 	virtual ~Game();
+
+	//
+	// Method called when the object is added and registered
+	virtual bool onAdd();
+
+	//
+	// Method called when the object is deleted
+	virtual void onDelete();
 };
 
 #endif
