@@ -34,7 +34,7 @@ The Player class looks like this on the C++ side:
     class Player : public ScriptObject
     {
     public:
-        DEFINE_SCRIPT_OBJECT(Player, ScriptObject);
+        DEFINE_SCRIPT_OBJECT(Player);
         
         Player();
         virtual ~Player();
@@ -223,3 +223,4 @@ and prevented in the future.
 ### Credits ###
 
 http://www.lua.org - The Programming Language Lua.
+http://www.glfw.org - An OpenGL Library
