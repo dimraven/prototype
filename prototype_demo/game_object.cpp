@@ -1,8 +1,8 @@
 #include "game_object.h"
-IMPLEMENT_SCRIPT_CLASS(GameObject, ScriptObject);
+IMPLEMENT_SCRIPT_CLASS(GameObject, DrawableObject);
 
 GameObject::GameObject()
-	: ScriptObject()
+	: DrawableObject()
 {
 }
 

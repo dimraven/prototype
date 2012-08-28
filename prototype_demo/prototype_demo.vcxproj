@@ -83,19 +83,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="drawable_object.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game_object.cpp" />
     <ClCompile Include="game_window.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="drawable_object.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="game_object.h" />
     <ClInclude Include="game_window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\class.lua" />
-    <None Include="bin\game\player.lua" />
+    <None Include="bin\game\astroidsgame.lua" />
+    <None Include="bin\game\ship.lua" />
     <None Include="bin\main.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -43,11 +43,11 @@ int main()
 
 	// 2. Bind our C++ classes
 	Script::bind<Game>();
-	Script::bind<GameObject>();
 	Script::bind<GameWindow>()
 		.addMethod("open", &GameWindow::open)
 		.addMethod("close", &GameWindow::close);
-
+	Script::bind<DrawableObject>();
+	Script::bind<GameObject>();
 
 	// 3. Load and execute the lua main file
 	Script::loadFile("main.lua");

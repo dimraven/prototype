@@ -26,6 +26,9 @@
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="drawable_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_object.h">
@@ -37,6 +40,9 @@
     <ClInclude Include="game.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="drawable_object.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\class.lua">
@@ -45,7 +51,10 @@
     <None Include="bin\main.lua">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="bin\game\player.lua">
+    <None Include="bin\game\astroidsgame.lua">
+      <Filter>Resource Files\game</Filter>
+    </None>
+    <None Include="bin\game\ship.lua">
       <Filter>Resource Files\game</Filter>
     </None>
   </ItemGroup>
