@@ -223,4 +223,5 @@ and prevented in the future.
 ### Credits ###
 
 http://www.lua.org - The Programming Language Lua.
+
 http://www.glfw.org - An OpenGL Library
