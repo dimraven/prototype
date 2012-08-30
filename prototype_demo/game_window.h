@@ -26,7 +26,7 @@ public:
 	// Shows this game window
 	// @param width
 	// @param height
-	void open(int width, int height);
+	void open(int width, int height, std::string title);
 
 	//
 	// Closes a game window

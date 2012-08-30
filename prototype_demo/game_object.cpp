@@ -24,6 +24,8 @@ void GameObject::onRemove()
 		}
 	}
 	mBehaviours.clear();
+
+	DrawableObject::onRemove();
 }
 
 void GameObject::onUpdate(float dt)

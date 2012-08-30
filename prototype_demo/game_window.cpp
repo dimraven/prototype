@@ -17,16 +17,15 @@ bool GameWindow::onAdd()
 	if(!ScriptObject::onAdd())
 		return false;
 
-	return glfwInit() != 0;
+	return true;
 }
 
 void GameWindow::onRemove()
 {
-	glfwTerminate();
 	ScriptObject::onRemove();
 }
 
-void GameWindow::open(int width, int height)
+void GameWindow::open(int width, int height, std::string title)
 {
 	if(width == 0 || height == 0)
 	{
@@ -35,6 +34,7 @@ void GameWindow::open(int width, int height)
 	}
 
 	glfwOpenWindow(width, height, 0,0,0,0, 16,0, GLFW_WINDOW);
+	glfwSetWindowTitle(title.c_str());
 }
 
 void GameWindow::close()

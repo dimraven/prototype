@@ -36,13 +36,31 @@ namespace prototype
 		assert(mScriptRef != 0 && "You must register this instance before you can invoke any script methods on it");
 				
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
-		//lua_getref(mCurrentState, mScriptRef);
 		if(lua_istable(mCurrentState, -1))
 		{
 			lua_getfield(mCurrentState, -1, methodName);
 			if(lua_isfunction(mCurrentState, -1)) {
-				//lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
-				//lua_getref(mCurrentState, mScriptRef);
+				return true;
+			}
+			lua_pop(mCurrentState, 1);
+		}
+		lua_pop(mCurrentState, 1);
+		return false;
+	}
+
+	bool ScriptInvoker::isMethodDefined(const char* methodName)
+	{
+		if(methodName == NULL)
+			return false;
+
+		assert(mScriptRef != 0 && "You must register this instance before you can invoke any script methods on it");
+
+		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+		if(lua_istable(mCurrentState, -1))
+		{
+			lua_getfield(mCurrentState, -1, methodName);
+			if(lua_isfunction(mCurrentState, -1)) {
+				lua_pop(mCurrentState, 2);
 				return true;
 			}
 			lua_pop(mCurrentState, 1);

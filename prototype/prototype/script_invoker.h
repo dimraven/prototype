@@ -16,6 +16,12 @@ namespace prototype
 		// Invokes a script method for this instance
 		void invokeMethod(const char* methodName);
 
+		//
+		// Checks if a method is defined in a script file
+		// @param methodName the name of the method
+		// @return TRUE if the method is defined in a script file; FALSE otherwise
+		bool isMethodDefined(const char* methodName);
+
 		template<typename P1>
 		void invokeMethod(const char* methodName, P1 p1)
 		{

@@ -15,6 +15,9 @@
     <Filter Include="Resource Files\game\behaviours">
       <UniqueIdentifier>{83753c04-b93e-43c1-a722-e1654640d463}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\input">
+      <UniqueIdentifier>{8ceacb57-4064-4260-b240-1910fff634cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -35,6 +38,9 @@
     <ClCompile Include="behaviour.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="input\keyboard_event_observer.cpp">
+      <Filter>Source Files\input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_object.h">
@@ -51,6 +57,12 @@
     </ClInclude>
     <ClInclude Include="behaviour.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="input\keyboard_event_listener.h">
+      <Filter>Source Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="input\keyboard_event_observer.h">
+      <Filter>Source Files\input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
