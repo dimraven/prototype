@@ -2,6 +2,14 @@ prototype
 =========
 A library for prototyping c++ class using Lua (from Lua's point of view).
 
+### Installation Notes ###
+
+The installation notes and source projects are only available for Windows and for Visual Studio 2010 at the moment.
+More will come soon (I've planned on making support for Dev-C++ and probably xcode). 
+
+The script engine requires Lua 5.2.1. Read lib/lua/README.txt for information about this.
+The demo application requires GLFW (A OpenGL wrapper library). Read lib/glfw/README.txt for information abou this.
+
 ### What is prototype ###
 
 Although the name can be "slightly" missleading, it's purpose is straight on. The purpose of this library
@@ -26,7 +34,7 @@ The Player class looks like this on the C++ side:
     class Player : public ScriptObject
     {
     public:
-        DEFINE_SCRIPT_OBJECT(Player, ScriptObject);
+        DEFINE_SCRIPT_OBJECT(Player);
         
         Player();
         virtual ~Player();
@@ -215,3 +223,5 @@ and prevented in the future.
 ### Credits ###
 
 http://www.lua.org - The Programming Language Lua.
+
+http://www.glfw.org - An OpenGL Library
