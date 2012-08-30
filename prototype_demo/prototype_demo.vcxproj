@@ -103,6 +103,7 @@
   <ItemGroup>
     <None Include="bin\class.lua" />
     <None Include="bin\game\astroidsgame.lua" />
+    <None Include="bin\game\behaviours\killablebehaviour.lua" />
     <None Include="bin\game\behaviours\shipcontrollerbehaviour.lua" />
     <None Include="bin\game\ship.lua" />
     <None Include="bin\main.lua" />

@@ -1,6 +1,7 @@
 require "class"
 local Ship = require "game.ship"
 local ShipControllerBehaviour = require "game.behaviours.shipcontrollerbehaviour"
+local KillableBehaviour = require "game.behaviours.killablebehaviour"
 
 AstroidsGame = class(Game, function(self)
 	Game.init(self)
@@ -11,10 +12,17 @@ function AstroidsGame:start()
 	window:open(1024, 768, "Astroids The Game")
 
 	-- Create our game objects and add a ship controller behaviour, which listens for key input
-	local ship = Ship("John Doe", 10.0, 100)
+	local ship = Ship("John Doe")
 	ship:addBehaviour(ShipControllerBehaviour(35.0))
+	ship:addBehaviour(KillableBehaviour(100))
 
-	-- self:addGameObject(ship)
+	while true do
+		if not self:isRunning() then
+			break
+		end
+
+		-- Do extra stuff here!!
+	end
 
 	delete(ship)
 	delete(window)

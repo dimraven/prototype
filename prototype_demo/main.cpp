@@ -16,7 +16,8 @@ int main()
 	Script::initialize();
 
 	// 2. Bind our C++ classes
-	Script::bind<Game>();
+	Script::bind<Game>()
+		.addMethod("isRunning", &Game::isRunning);
 	Script::bind<GameWindow>()
 		.addMethod("open", &GameWindow::open)
 		.addMethod("close", &GameWindow::close);

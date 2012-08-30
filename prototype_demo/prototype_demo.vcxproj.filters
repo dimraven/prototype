@@ -81,5 +81,8 @@
     <None Include="bin\game\behaviours\shipcontrollerbehaviour.lua">
       <Filter>Resource Files\game\behaviours</Filter>
     </None>
+    <None Include="bin\game\behaviours\killablebehaviour.lua">
+      <Filter>Resource Files\game\behaviours</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -30,6 +30,10 @@ public:
 	//
 	// Method called when the object is deleted
 	virtual void onRemove();
+
+	//
+	//
+	bool isRunning();
 };
 
 // UGLY__
