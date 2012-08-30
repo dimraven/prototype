@@ -15,9 +15,6 @@ namespace prototype
 	template<class Clazz>
 	int lua_ScriptObject_call(lua_State* L)
 	{
-		int params = lua_gettop(L);
-		assert(params == 1 && "Constructor parameters are not allowed");
-
 		// If the compiler fails here then the there isn't any default constructor available
 		// The class itself must inherit from ScriptObject
 		Clazz* obj = new Clazz();
@@ -28,7 +25,6 @@ namespace prototype
 		}
 		
 		lua_rawgeti(L, LUA_REGISTRYINDEX, obj->getScriptRef());
-		//lua_getref(L, obj->getScriptRef());
 		return 1;
 	}
 

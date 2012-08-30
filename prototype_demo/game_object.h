@@ -3,14 +3,13 @@
 
 #include <list>
 #include "drawable_object.h"
-
-class Behaviour;
+#include "behaviour.h"
 
 //
 // Base class for our game objects.
 class GameObject : public DrawableObject
 {
-	typedef std::list<Behaviour*> Behaviours;
+	typedef std::vector< ScriptObjectPtr<Behaviour> > Behaviours;
 
 public:
 	DEFINE_SCRIPT_CLASS(GameObject);
@@ -18,6 +17,8 @@ public:
 public:
 	GameObject();
 	virtual ~GameObject();
+
+	virtual void onRemove();
 
 	//
 	// Method called every frame

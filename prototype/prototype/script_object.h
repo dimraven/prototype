@@ -1,12 +1,15 @@
 #ifndef _PROTOTYPE_SCRIPT_OBJECT_H_
 #define _PROTOTYPE_SCRIPT_OBJECT_H_
 
+#include <list>
 #include "script_invoker.h"
 #include "class_definition.h"
 #include "script.h"
 
 namespace prototype
 {
+	class ScriptObject;
+
 	//
 	// Base class for all scriptable object types.
 	class ScriptObject : public ScriptInvoker
@@ -59,8 +62,127 @@ namespace prototype
 		// Method called before this object is being unregistered by the script engine
 		virtual void onRemove();
 
+	public:
+		//
+		// Removes a SafePointer reference
+		// @param ptr
+		void unreferencePointer(ScriptObject** ptr);
+
+		//
+		// Registers a safe pointer reference
+		// @param ptr
+		void referencePointer(ScriptObject** ptr);
+
+	private:
+		std::list<ScriptObject**> mSafePointerReferences;
 	};
 
+	//
+	// Container for the ScriptObject instance. Used to make sure that we don't access script-deleted objects from C++ by misstake.
+	//
+	template<class T>
+	class ScriptObjectPtr
+	{
+	public:
+		ScriptObjectPtr() : mPointer(NULL) {
+		}
+
+		ScriptObjectPtr(const ScriptObjectPtr<T>& other) : mPointer(const_cast<T*>(static_cast<const T*>(other.mPointer))) {
+			if(mPointer != NULL)
+				mPointer->referencePointer(&mPointer);
+		}
+
+		ScriptObjectPtr(T* ptr) : mPointer(ptr) {
+			if(mPointer != NULL)
+				mPointer->referencePointer(&mPointer);
+		}
+
+		virtual ~ScriptObjectPtr() {
+			if(mPointer)
+				mPointer->unreferencePointer(&mPointer);
+		}
+		
+		void set(T* ptr) {
+			if(mPointer != NULL)
+				mPointer->unreferencePointer(&mPointer);
+			mPointer = ptr;
+			if(mPointer != NULL)
+				mPointer->referencePointer(&mPointer);
+		}
+
+		T& operator*() {
+			if(mPointer == NULL)
+				return NULL;
+
+			return *static_cast<T*>(mPointer);
+		}
+
+		const T& operator*() const {
+			if(mPointer == NULL)
+				return NULL;
+
+			return *static_cast<T*>(mPointer);
+		}
+
+		T* operator->() {
+			if(mPointer == NULL)
+				return NULL;
+
+			return static_cast<T*>(mPointer);
+		}
+
+		const T* operator->() const {
+			if(mPointer == NULL)
+				return NULL;
+
+			return static_cast<T*>(mPointer);
+		}
+
+		T* get() const {
+			if(mPointer == NULL) 
+				return NULL;
+
+			return static_cast<T*>(mPointer);
+		}
+
+		ScriptObjectPtr<T>& operator=(T* ptr) {
+			set(ptr);
+			return *this;
+		}
+
+		ScriptObjectPtr<T>& operator=(ScriptObjectPtr<T>& other) {
+			if(&other == this)
+				return *this;
+
+			set(static_cast<T*>(other.mPointer));
+			return *this;
+		}
+
+		template<class U>
+		ScriptObjectPtr<T>& operator=(ScriptObjectPtr<U>& other) {
+			if(other.exists())
+				set(dynamic_cast<T*>(other.get()));
+
+			set(NULL);
+			return *this;
+		}
+
+		bool exists() const {
+			return mPointer != NULL;
+		}
+
+		bool operator==(const ScriptObjectPtr<T>& other) const {
+			return mPointer == other.mPointer;
+		}
+
+		template<class U>
+		bool operator==(const ScriptObjectPtr<U>& other) const {
+			return mPointer == static_cast<const ScriptObject*>(other.mPointer);
+		}
+
+	private:
+		ScriptObject* mPointer;
+	};
 }
 
 #endif

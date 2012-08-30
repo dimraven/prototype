@@ -133,7 +133,8 @@ namespace prototype
 				return;
 			}
 
-			lua_getref(L, value->getScriptRef());
+			lua_rawgeti(L, LUA_REGISTRYINDEX, value->getScriptRef());
+			//lua_getref(L, value->getScriptRef());
 		}
 	};
 

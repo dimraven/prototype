@@ -10,34 +10,6 @@ using namespace prototype;
 #include "game_window.h"
 #include "behaviour.h"
 
-/*
-int old_mode;
-
-void enter_mode13h(void)
-{
-	union REGS in, out;
-
-	// get old video mode
-	in.h.ah=0xf;
-	int86(0x10, &in, &out);
-	old_mode=out.h.al;
-
-	// enter mode 13h
-	in.h.ah=0;
-	in.h.al=0x13;
-	int86(0x10, &in, &out);
-}
-
-void leave_mode13h(void)
-{
-	union REGS in, out;
-
-	// change to the video mode we were in before we switched to mode 13h
-	in.h.ah=0;
-	in.h.al=old_mode;
-	int86(0x10, &in, &out);
-}
-*/
 int main()
 {
 	// 1. Initialize the script engine
@@ -52,7 +24,8 @@ int main()
 	Script::bind<GameObject>()
 		.addMethod("addBehaviour", &GameObject::addBehaviour)
 		.addMethod("removeBehaviour", &GameObject::removeBehaviour);
-	Script::bind<Behaviour>();
+	Script::bind<Behaviour>()
+		.addMethod("getOwner", &Behaviour::getOwner);
 
 	// 3. Load and execute the lua main file
 	Script::loadFile("main.lua");

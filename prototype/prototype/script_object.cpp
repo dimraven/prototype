@@ -23,7 +23,8 @@ namespace prototype
 	{}
 
 	ScriptObject::~ScriptObject()
-	{}
+	{
+	}
 
 	bool ScriptObject::registerObject()
 	{
@@ -103,6 +104,15 @@ namespace prototype
 
 		mScriptRef = 0;
 		mCurrentState = NULL;
+
+		
+		std::list<ScriptObject**>::iterator it = mSafePointerReferences.begin();
+		std::list<ScriptObject**>::iterator end = mSafePointerReferences.end();
+		for(; it != end; ++it) {
+			ScriptObject** ptr = *it;
+			*ptr = NULL;
+		}
+		mSafePointerReferences.clear();
 	}
 
 	bool ScriptObject::onAdd()
@@ -114,5 +124,22 @@ namespace prototype
 	void ScriptObject::onRemove()
 	{
 		invokeMethod("onDelete", 10);
+	}
+
+	void ScriptObject::unreferencePointer(ScriptObject** ptr)
+	{
+		std::list<ScriptObject**>::iterator it = mSafePointerReferences.begin();
+		std::list<ScriptObject**>::iterator end = mSafePointerReferences.end();
+		for(; it != end; ++it) {
+			if( (*it) == ptr ) {
+				mSafePointerReferences.erase(it);
+				return;
+			}
+		}
+	}
+
+	void ScriptObject::referencePointer(ScriptObject** ptr)
+	{
+		mSafePointerReferences.push_back(ptr);
 	}
 }

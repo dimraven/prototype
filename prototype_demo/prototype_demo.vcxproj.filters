@@ -12,6 +12,9 @@
     <Filter Include="Resource Files\game">
       <UniqueIdentifier>{a3321cbb-56f7-4586-9646-6d87f9b869ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\game\behaviours">
+      <UniqueIdentifier>{83753c04-b93e-43c1-a722-e1654640d463}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +65,9 @@
     </None>
     <None Include="bin\game\ship.lua">
       <Filter>Resource Files\game</Filter>
+    </None>
+    <None Include="bin\game\behaviours\shipcontrollerbehaviour.lua">
+      <Filter>Resource Files\game\behaviours</Filter>
     </None>
   </ItemGroup>
 </Project>
