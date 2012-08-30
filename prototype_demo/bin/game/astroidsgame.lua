@@ -12,12 +12,12 @@ function AstroidsGame:start()
 
 	-- Create our game objects and add a ship controller behaviour, which listens for key input
 	local ship = Ship("John Doe", 10.0, 100)
-	--local behaviour = ShipControllerBehaviour(35.0)
-	ship:addBehaviour(ShipControllerBehaviour(35.0))
+	local behaviour = ShipControllerBehaviour(35.0)
+	ship:addBehaviour(behaviour)
 
 	-- self:addGameObject(ship)
 
-	--delete(behaviour)
+	delete(behaviour)
 	delete(ship)
 	delete(window)
 end

@@ -12,9 +12,13 @@ Game::~Game()
 
 bool Game::onAdd()
 {
+	if(!ScriptObject::onAdd())
+		return false;
+
 	return true;
 }
 
 void Game::onRemove()
 {
+	ScriptObject::onRemove();
 }

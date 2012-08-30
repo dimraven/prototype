@@ -14,12 +14,16 @@ GameWindow::~GameWindow()
 
 bool GameWindow::onAdd()
 {
+	if(!ScriptObject::onAdd())
+		return false;
+
 	return glfwInit() != 0;
 }
 
 void GameWindow::onRemove()
 {
 	glfwTerminate();
+	ScriptObject::onRemove();
 }
 
 void GameWindow::open(int width, int height)

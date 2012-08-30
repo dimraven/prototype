@@ -267,8 +267,13 @@ namespace prototype
 				std::map<std::string, method_pointer_wrapper*> methods = mParent->getMethods();
 				std::map<std::string, method_pointer_wrapper*>::iterator it = methods.begin();
 				std::map<std::string, method_pointer_wrapper*>::iterator end = methods.end();
-				for(; it != end; ++it)
-					addMethod(L, it->first.c_str(), it->second);
+				for(; it != end; ++it) {
+					if(strcmp("__call", it->first.c_str())  != 0 &&
+						strcmp("init", it->first.c_str())  != 0)
+					{
+						addMethod(L, it->first.c_str(), it->second);
+					}
+				}
 
 				// The "funcs" map does now contain names and function pointers to the rest of the functions
 				luaL_getmetatable(L, mMetaTableName.c_str());

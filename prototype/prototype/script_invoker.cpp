@@ -12,13 +12,20 @@ namespace prototype
 
 	void ScriptInvoker::invokeMethod(const char* method)
 	{
+#ifdef _DEBUG
+		int top1 = lua_gettop(mCurrentState);
+#endif
 		if(!findAndPushMethod(method))
 			return;
 
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
-		//lua_getref(mCurrentState, mScriptRef);
 		lua_pcall(mCurrentState, 1, 0, NULL);
 		lua_pop(mCurrentState, 1);
+
+#ifdef _DEBUG
+		int currentStack = lua_gettop(mCurrentState);
+		assert(top1 == currentStack && "The stack after the method call is corrupt");
+#endif
 	}
 
 	bool ScriptInvoker::findAndPushMethod(const char* methodName)
@@ -34,7 +41,7 @@ namespace prototype
 		{
 			lua_getfield(mCurrentState, -1, methodName);
 			if(lua_isfunction(mCurrentState, -1)) {
-				lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+				//lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
 				//lua_getref(mCurrentState, mScriptRef);
 				return true;
 			}
