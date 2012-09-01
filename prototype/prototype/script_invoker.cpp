@@ -20,7 +20,6 @@ namespace prototype
 
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
 		lua_pcall(mCurrentState, 1, 0, NULL);
-		lua_pop(mCurrentState, 1);
 
 #ifdef _DEBUG
 		int currentStack = lua_gettop(mCurrentState);
@@ -33,13 +32,14 @@ namespace prototype
 		if(methodName == NULL)
 			return false;
 
-		assert(mScriptRef != 0 && "You must register this instance before you can invoke any script methods on it");
-				
+		assert(mScriptRef != 0 && "You must register this instance using 'registerObject' before you can invoke any script methods on it");
+
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
 		if(lua_istable(mCurrentState, -1))
 		{
 			lua_getfield(mCurrentState, -1, methodName);
 			if(lua_isfunction(mCurrentState, -1)) {
+				lua_remove(mCurrentState, -2); // Only the reference to the method exists on the stack after this
 				return true;
 			}
 			lua_pop(mCurrentState, 1);
@@ -48,7 +48,7 @@ namespace prototype
 		return false;
 	}
 
-	bool ScriptInvoker::isMethodDefined(const char* methodName)
+	bool ScriptInvoker::isMethodDefined(const char* methodName) const
 	{
 		if(methodName == NULL)
 			return false;

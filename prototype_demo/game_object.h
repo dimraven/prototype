@@ -30,6 +30,9 @@ public:
 
 private:
 	Behaviours mBehaviours;
+
+	//
+	Behaviours mUpdateBehaviours;
 };
 
 

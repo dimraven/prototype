@@ -90,6 +90,7 @@
     <ClCompile Include="game_window.cpp" />
     <ClCompile Include="input\keyboard_event_observer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="scene_definition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="behaviour.h" />
@@ -99,9 +100,11 @@
     <ClInclude Include="game_window.h" />
     <ClInclude Include="input\keyboard_event_listener.h" />
     <ClInclude Include="input\keyboard_event_observer.h" />
+    <ClInclude Include="scene_definition.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\class.lua" />
+    <None Include="bin\data\scenes\scene0.lua" />
     <None Include="bin\game\astroidsgame.lua" />
     <None Include="bin\game\behaviours\killablebehaviour.lua" />
     <None Include="bin\game\behaviours\shipcontrollerbehaviour.lua" />

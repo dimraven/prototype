@@ -16,18 +16,17 @@ bool Behaviour::onAdd()
 	if(!ScriptObject::onAdd())
 		return false;
 
-	if(isMethodDefined("onKeyUp") ||
-		isMethodDefined("onKeyDown"))
-	{
+	if(isKeyboardBehaviour())
 		GameInstance->addKeyboardEventListener(this);
-	}
 
 	return true;
 }
 
 void Behaviour::onRemove()
 {
-	GameInstance->removeKeyboardEventListener(this);
+	if(isKeyboardBehaviour())
+		GameInstance->removeKeyboardEventListener(this);
+
 	ScriptObject::onRemove();
 }
 
@@ -44,4 +43,22 @@ void Behaviour::onKeyDown(int key)
 void Behaviour::onKeyUp(int key)
 {
 	invoke("onKeyUp", key);
+}
+
+bool Behaviour::isKeyboardBehaviour() const
+{
+	return isMethodDefined("onKeyUp") ||
+		isMethodDefined("onKeyDown");
+}
+
+bool Behaviour::isMouseBehaviour() const
+{
+	return isMethodDefined("onMouseMove") ||
+		isMethodDefined("onMouseDown") || 
+		isMethodDefined("onMouseUp");;
+}
+
+bool Behaviour::isUpdateBehaviour() const
+{
+	return isMethodDefined("onUpdate");
 }

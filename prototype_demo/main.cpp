@@ -9,6 +9,7 @@ using namespace prototype;
 #include "game_object.h"
 #include "game_window.h"
 #include "behaviour.h"
+#include "scene_definition.h"
 
 int main()
 {
@@ -27,6 +28,8 @@ int main()
 		.addMethod("removeBehaviour", &GameObject::removeBehaviour);
 	Script::bind<Behaviour>()
 		.addMethod("getOwner", &Behaviour::getOwner);
+	Script::bind<SceneDefinition>()
+		.addMethod("load", &SceneDefinition::load);
 
 	// 3. Load and execute the lua main file
 	Script::loadFile("main.lua");

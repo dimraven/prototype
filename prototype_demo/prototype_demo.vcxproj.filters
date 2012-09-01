@@ -18,6 +18,12 @@
     <Filter Include="Source Files\input">
       <UniqueIdentifier>{8ceacb57-4064-4260-b240-1910fff634cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\data">
+      <UniqueIdentifier>{f7c4319c-c0e9-47e0-b804-78abdb2c364d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\data\scenes">
+      <UniqueIdentifier>{aa4d27bb-fc96-49d4-b536-04d6d14e42c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -40,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="input\keyboard_event_observer.cpp">
       <Filter>Source Files\input</Filter>
+    </ClCompile>
+    <ClCompile Include="scene_definition.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +73,9 @@
     <ClInclude Include="input\keyboard_event_observer.h">
       <Filter>Source Files\input</Filter>
     </ClInclude>
+    <ClInclude Include="scene_definition.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\class.lua">
@@ -83,6 +95,9 @@
     </None>
     <None Include="bin\game\behaviours\killablebehaviour.lua">
       <Filter>Resource Files\game\behaviours</Filter>
+    </None>
+    <None Include="bin\data\scenes\scene0.lua">
+      <Filter>Resource Files\data\scenes</Filter>
     </None>
   </ItemGroup>
 </Project>

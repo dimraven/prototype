@@ -52,6 +52,11 @@ public:
 	// @param key the key we released
 	virtual void onKeyUp(int key);
 
+public:
+	bool isKeyboardBehaviour() const;
+	bool isMouseBehaviour() const;
+	bool isUpdateBehaviour() const;
+
 private:
 	GameObject* mOwner;
 };

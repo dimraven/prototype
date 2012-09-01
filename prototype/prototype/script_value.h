@@ -109,7 +109,10 @@ namespace prototype
 			if(lua_istable(L, idx))
 			{
 				lua_pushstring(L, "_instance");
-				lua_gettable(L, idx);
+				if(idx > 0)
+					lua_gettable(L, idx);
+				else
+					lua_gettable(L, idx - 1);
 				if(lua_isuserdata(L, -1))
 				{
 					void* userdata = lua_touserdata(L, -1);
@@ -191,7 +194,24 @@ namespace prototype
 		{
 			if(lua_istable(L, idx))
 			{
-				// TODO: Implement
+#ifdef _DEBUG
+				int top1 = lua_gettop(L);
+#endif
+				lua_pushnil(L);
+				while(lua_next(L, -2) != 0)
+				{
+					item_type item;
+					if(script_value<item_type>::pop(L, item, -1))
+					{
+						value.push_back(item);
+					}
+					lua_pop(L, 1);
+				}
+#ifdef _DEBUG
+				int top2 = lua_gettop(L);
+				assert(top1 == top2 && "Lua stack has been corrupt");
+#endif
+				return true;
 			}
 
 			//lua_pop(L, 1);
