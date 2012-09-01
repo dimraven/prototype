@@ -117,13 +117,13 @@ namespace prototype
 
 	bool ScriptObject::onAdd()
 	{
-		invokeMethod("onAdd");
+		invoke("onAdd");
 		return true;
 	}
 
 	void ScriptObject::onRemove()
 	{
-		invokeMethod("onDelete", 10);
+		invoke("onDelete", 10);
 	}
 
 	void ScriptObject::unreferencePointer(ScriptObject** ptr)

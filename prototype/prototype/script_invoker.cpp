@@ -10,7 +10,7 @@ namespace prototype
 	ScriptInvoker::~ScriptInvoker()
 	{}
 
-	void ScriptInvoker::invokeMethod(const char* method)
+	void ScriptInvoker::invoke(const char* method)
 	{
 #ifdef _DEBUG
 		int top1 = lua_gettop(mCurrentState);

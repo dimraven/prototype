@@ -33,15 +33,15 @@ void Behaviour::onRemove()
 
 void Behaviour::onUpdate(float dt)
 {
-	invokeMethod("onUpdate", dt);
+	invoke("onUpdate", dt);
 }
 
 void Behaviour::onKeyDown(int key)
 {
-	invokeMethod("onKeyDown", key);
+	invoke("onKeyDown", key);
 }
 
 void Behaviour::onKeyUp(int key)
 {
-	invokeMethod("onKeyUp", key);
+	invoke("onKeyUp", key);
 }

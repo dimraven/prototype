@@ -35,7 +35,7 @@ void GameObject::onUpdate(float dt)
 	for(; it != end; ++ it)
 		(*it)->onUpdate(dt);
 
-	invokeMethod("onUpdate", dt);
+	invoke("onUpdate", dt);
 }
 
 void GameObject::addBehaviour(Behaviour* behaviour)

@@ -68,5 +68,5 @@ bool Game::isRunning()
 
 	glfwSwapBuffers();
 
-	return glfwGetWindowParam(GLFW_OPENED);
+	return glfwGetWindowParam(GLFW_OPENED) != 0;
 }
