@@ -38,7 +38,6 @@ namespace prototype
 		
 		// Set _instacne 
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
-		//lua_getref(mCurrentState, mScriptRef);
 		lua_pushstring(mCurrentState, "_instance");
 		lua_pushlightuserdata(mCurrentState, this);
 		lua_settable(mCurrentState, -3);
@@ -62,7 +61,6 @@ namespace prototype
 		mCurrentState = gLuaState;
 		
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
-		//lua_getref(mCurrentState, mScriptRef);
 		lua_pushstring(mCurrentState, "_instance");
 		lua_pushlightuserdata(mCurrentState, this);
 		lua_settable(mCurrentState, -3);
@@ -93,14 +91,12 @@ namespace prototype
 		
 		// Set _instance to nil
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
-		//lua_getref(mCurrentState, mScriptRef);
 		lua_pushstring(mCurrentState, "_instance");
 		lua_pushnil(mCurrentState);
 		lua_rawset(mCurrentState, -3);
 		lua_pop(mCurrentState, 1);
 
 		luaL_unref(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
-		//lua_unref(mCurrentState, mScriptRef);
 
 		mScriptRef = 0;
 		mCurrentState = NULL;
@@ -126,7 +122,7 @@ namespace prototype
 		invoke("onDelete", 10);
 	}
 
-	void ScriptObject::unreferencePointer(ScriptObject** ptr)
+	void ScriptObject::detachPointer(ScriptObject** ptr)
 	{
 		std::list<ScriptObject**>::iterator it = mSafePointerReferences.begin();
 		std::list<ScriptObject**>::iterator end = mSafePointerReferences.end();
@@ -138,7 +134,7 @@ namespace prototype
 		}
 	}
 
-	void ScriptObject::referencePointer(ScriptObject** ptr)
+	void ScriptObject::attachPointer(ScriptObject** ptr)
 	{
 		mSafePointerReferences.push_back(ptr);
 	}

@@ -21,7 +21,7 @@ namespace prototype
 		//
 		// @return The ID which connects this instance to a script-represented version of this class. 
 		//		0 if it isn't connected (i.e. it isn't registered).
-		inline int getScriptRef() const {
+		inline int getId() const {
 			return mScriptRef;
 		}
 

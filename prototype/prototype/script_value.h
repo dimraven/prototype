@@ -1,11 +1,13 @@
 #ifndef _PROTOTYPE_SCRIPT_VALUE_H_
 #define _PROTOTYPE_SCRIPT_VALUE_H_
 
+#include <iostream>
 #include <exception>
 #include <string>
 #include <vector>
 #include <map>
 #include "script_reference.h"
+#include "dictionary.h"
 
 extern "C"
 {
@@ -16,17 +18,21 @@ extern "C"
 
 namespace prototype
 {
+	template<class T> class ScriptObjectPtr;
+
 	template<typename value_type>
 	struct script_value
 	{
-		static bool pop(lua_State* L, value_type& value, int idx)
+		static bool pop(lua_State* L, value_type& value)
 		{
-			throw std::exception("Un-supported type");
+			std::cerr << "Cannot pop unknown type: " << typeid(value_type).name() << std::endl;
+			lua_pop(L, 1);
 		}
 
 		static void push(lua_State* L, value_type& value)
 		{
-			throw std::exception("Un-supported type");
+			std::cerr << "Cannot push unknown type: " << typeid(value_type).name() << std::endl;
+			lua_pushnil(L);
 		}
 	};
 
@@ -34,18 +40,14 @@ namespace prototype
 	template<>
 	struct script_value<int>
 	{
-		static bool pop(lua_State* L, int& value, int idx)
+		static bool pop(lua_State* L, int& value)
 		{
-			if(lua_isnumber(L, idx))
-			{
-				lua_Integer integer = lua_tointeger(L, idx);
-				//lua_pop(L, 1);
-				value = (int)integer;
-				return true;
-			}
-		
-			//lua_pop(L, 1);
-			return false;
+			bool ok = lua_isnumber(L, -1) == 1;
+			if(ok)
+				value = (int)lua_tointeger(L, -1);
+
+			lua_pop(L, 1);
+			return ok;
 		}
 
 		static void push(lua_State* L, int& value)
@@ -58,18 +60,14 @@ namespace prototype
 	template<>
 	struct script_value<std::string>
 	{
-		static bool pop(lua_State* L, std::string& value, int idx)
+		static bool pop(lua_State* L, std::string& value)
 		{
-			if(lua_isstring(L, idx))
-			{
-				const char* str = lua_tostring(L, idx);
-				value = std::string(str);
-				//lua_pop(L, 1);
-				return true;
-			}
-		
-			//lua_pop(L, 1);
-			return false;
+			bool ok = lua_isstring(L, -1) == 1;
+			if(ok)
+				value = std::string(lua_tostring(L, -1));
+
+			lua_pop(L, 1);
+			return ok;
 		}
 	
 		static void push(lua_State* L, std::string& value)
@@ -81,18 +79,14 @@ namespace prototype
 	template<>
 	struct script_value<double>
 	{
-		static bool pop(lua_State* L, double& value, int idx)
+		static bool pop(lua_State* L, double& value)
 		{
-			if(lua_isnumber(L, idx))
-			{
-				lua_Number number = lua_tonumber(L, idx);
-				value = (double)number;
-				//lua_pop(L, 1);
-				return true;
-			}
-		
-			//lua_pop(L, 1);
-			return false;
+			bool ok = lua_isnumber(L, -1) == 1;
+			if(ok)
+				value = (double)lua_tonumber(L, -1);
+			
+			lua_pop(L, 1);
+			return ok;
 		}
 
 		static void push(lua_State* L, double& value)
@@ -104,58 +98,91 @@ namespace prototype
 	template<class Clazz>
 	struct script_value<Clazz*>
 	{
-		static bool pop(lua_State* L, Clazz*& value, int idx)
+		static bool pop(lua_State* L, Clazz*& value)
 		{
-			if(lua_istable(L, idx))
+			bool ok = lua_istable(L, -1);
+			if(ok)
 			{
 				lua_pushstring(L, "_instance");
-				if(idx > 0)
-					lua_gettable(L, idx);
-				else
-					lua_gettable(L, idx - 1);
-				if(lua_isuserdata(L, -1))
+				lua_gettable(L, -2);
+
+				ok = lua_isuserdata(L, -1) == 1;
+				if(ok)
 				{
 					void* userdata = lua_touserdata(L, -1);
 					ScriptReference* refValue = reinterpret_cast<ScriptReference*>(userdata);
 					value = dynamic_cast<Clazz*>(refValue);
-					lua_pop(L, 1);
-					return value != NULL;
+					ok = value != NULL;
 				}
 				lua_pop(L, 1);
-				return false;
 			}
 
-			return false;
+			lua_pop(L, 1);
+			return ok;
 		}
 
 		static void push(lua_State* L, Clazz*& value)
 		{
-			if(value == NULL || value->getScriptRef() == 0)
+			if(value == NULL || value->getId() == 0)
 			{
 				lua_pushnil(L);
 				return;
 			}
 
-			lua_rawgeti(L, LUA_REGISTRYINDEX, value->getScriptRef());
-			//lua_getref(L, value->getScriptRef());
+			lua_rawgeti(L, LUA_REGISTRYINDEX, value->getId());
+		}
+	};
+
+	template<class Clazz>
+	struct script_value< ScriptObjectPtr<Clazz> >
+	{
+		static bool pop(lua_State* L, ScriptObjectPtr<Clazz>& value)
+		{
+			bool ok = lua_istable(L, -1);
+			if(ok)
+			{
+				lua_pushstring(L, "_instance");
+				lua_gettable(L, -2);
+
+				ok = lua_isuserdata(L, -1) == 1;
+				if(ok)
+				{
+					void* userdata = lua_touserdata(L, -1);
+					ScriptReference* refValue = reinterpret_cast<ScriptReference*>(userdata);
+					value = dynamic_cast<Clazz*>(refValue);
+					ok = value.exists();
+				}
+				lua_pop(L, 1);
+			}
+
+			lua_pop(L, 1);
+			return ok;
+		}
+
+		static void push(lua_State* L, ScriptObjectPtr<Clazz>& value)
+		{
+			if(!value.exists() || value->getId() == 0)
+			{
+				lua_pushnil(L);
+				return;
+			}
+
+			lua_rawgeti(L, LUA_REGISTRYINDEX, value->getId());
+			lua_getref(L, value->getId());
 		}
 	};
 
 	template<>
 	struct script_value<float>
 	{
-		static bool pop(lua_State* L, float& value, int idx)
+		static bool pop(lua_State* L, float& value)
 		{
-			if(lua_isnumber(L, idx))
-			{
-				lua_Number number = lua_tonumber(L, idx);
-				value = (float)number;
-				//lua_pop(L, 1);
-				return true;
-			}
-		
-			//lua_pop(L, 1);
-			return false;
+			bool ok = lua_isnumber(L, -1) == 1;
+			if(ok)
+				value = (float)lua_tonumber(L, -1);
+
+			lua_pop(L, 1);
+			return ok;
 		}
 		
 		static void push(lua_State* L, float& value)
@@ -167,17 +194,13 @@ namespace prototype
 	template<>
 	struct script_value<bool>
 	{
-		static bool pop(lua_State* L, bool& value, int idx)
+		static bool pop(lua_State* L, bool& value)
 		{
-			if(lua_isboolean(L, idx))
-			{
-				int boolean = lua_toboolean(L, idx);
-				value = boolean == 1;
-				//lua_pop(L, 1);
-				return true;
-			}
+			bool ok = lua_isboolean(L, -1);
+			if(ok)
+				value = lua_toboolean(L, -1) != 0;
 
-			//lua_pop(L, 1);
+			lua_pop(L, 1);
 			return false;
 		}
 
@@ -187,62 +210,57 @@ namespace prototype
 		}
 	};
 
+	template<>
+	struct script_value< Dictionary >
+	{
+		static bool pop(lua_State* L, Dictionary& value)
+		{
+			bool ok = lua_istable(L, -1);
+			if(ok)
+			{
+				int ref = luaL_ref(L, LUA_REGISTRYINDEX);
+				value = Dictionary(L, ref);
+			}
+			return ok;
+		}
+
+		static void push(lua_State* L, Dictionary& value)
+		{
+			std::cerr << "Cannot push a Dictionary back to LUA at the moment" << std::endl;
+			lua_pushnil(L);
+		}
+	};
+
 	template<typename item_type>
 	struct script_value< std::vector<item_type> >
 	{
-		static bool pop(lua_State* L, std::vector<item_type>& value, int idx)
+		static bool pop(lua_State* L, std::vector<item_type>& value)
 		{
-			if(lua_istable(L, idx))
-			{
 #ifdef _DEBUG
-				int top1 = lua_gettop(L);
+			int top1 = lua_gettop(L);
 #endif
+			bool ok = lua_istable(L, -1);
+			if(ok)
+			{
 				lua_pushnil(L);
 				while(lua_next(L, -2) != 0)
 				{
 					item_type item;
-					if(script_value<item_type>::pop(L, item, -1))
+					if(script_value<item_type>::pop(L, item))
 					{
 						value.push_back(item);
 					}
-					lua_pop(L, 1);
 				}
-#ifdef _DEBUG
-				int top2 = lua_gettop(L);
-				assert(top1 == top2 && "Lua stack has been corrupt");
-#endif
-				return true;
 			}
 
-			//lua_pop(L, 1);
+			lua_pop(L, 1);
 			return false;
 		}
 
-		static int push(lua_State* L, std::vector<item_type>& value)
+		static void push(lua_State* L, std::vector<item_type>& value)
 		{
-			//lua_pushboolean(L, value ? 1 : 0);
-			return 0;
-		}
-	};
-
-	template<typename key_type, typename value_type>
-	struct script_value< std::map<key_type, value_type> >
-	{
-		static bool pop(lua_State* L, std::map<key_type, value_type>& value, int idx)
-		{
-			if(lua_istable(L, idx))
-			{
-				// TODO: Implement
-			}
-
-			//lua_pop(L, 1);
-			return false;
-		}
-
-		static int push(lua_State* L, std::map<key_type, value_type>& value)
-		{
-			//lua_pushboolean(L, value ? 1 : 0);
-			return 0;
+			std::cerr << "Cannot push a std::vector type back to LUA at the moment" << std::endl;
+			lua_pushnil(L);
 		}
 	};
 }

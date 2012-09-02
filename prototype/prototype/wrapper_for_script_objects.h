@@ -24,7 +24,7 @@ namespace prototype
 			return 0;
 		}
 		
-		lua_rawgeti(L, LUA_REGISTRYINDEX, obj->getScriptRef());
+		lua_rawgeti(L, LUA_REGISTRYINDEX, obj->getId());
 		return 1;
 	}
 

@@ -24,6 +24,12 @@
     <Filter Include="Resource Files\data\scenes">
       <UniqueIdentifier>{aa4d27bb-fc96-49d4-b536-04d6d14e42c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\data\ships">
+      <UniqueIdentifier>{37b0b49f-1d2d-4c50-96bf-4d65c503c9c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\data\images">
+      <UniqueIdentifier>{7ebe3356-c34d-4521-850a-41d9bcddee6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,6 +81,9 @@
     </ClInclude>
     <ClInclude Include="scene_definition.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bin\data\ships\player1lua">
+      <Filter>Resource Files\data\ships</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

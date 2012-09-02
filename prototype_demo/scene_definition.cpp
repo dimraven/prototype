@@ -27,12 +27,5 @@ void SceneDefinition::onRemove()
 
 void SceneDefinition::load()
 {
-	std::vector<GameObject*> objects;
-	invokeAndGet("onLoad", objects);
-	
-	for(unsigned int i = 0; i < objects.size(); ++i)
-	{
-		mGameObjects.push_back(objects[i]);
-	}
-
+	invokeAndGet("onLoad", mGameObjects);
 }

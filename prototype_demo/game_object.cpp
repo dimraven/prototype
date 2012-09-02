@@ -33,7 +33,10 @@ void GameObject::onUpdate(float dt)
 		Behaviours::size_type size = mUpdateBehaviours.size();
 		for(Behaviours::size_type i = 0; i < size; ++i)
 		{
-			mUpdateBehaviours[i]->onUpdate(dt);
+			if(mUpdateBehaviours[i].exists())
+			{
+				mUpdateBehaviours[i]->onUpdate(dt);
+			}
 		}
 	}
 	

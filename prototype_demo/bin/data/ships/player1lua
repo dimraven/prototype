@@ -1,0 +1,6 @@
+require "class"
+
+player1_metadata = {
+	name = "player1_metadata",
+	imageSrc = "/images/ships/player1.png"
+}

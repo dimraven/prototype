@@ -11,7 +11,7 @@ namespace prototype
 		int numobjects = lua_gettop(L);
 		for(int i = 0; i < numobjects; ++i) {
 			ScriptObject* self;
-			if(script_value<ScriptObject*>::pop(L, self, i + 1))
+			if(script_value<ScriptObject*>::pop(L, self))
 			{
 				self->unregisterObject();
 				delete self;
@@ -22,7 +22,6 @@ namespace prototype
 			}
 		}
 
-		lua_pop(L, numobjects);
 		return 0;
 	}
 

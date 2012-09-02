@@ -153,8 +153,7 @@ namespace prototype
 				return false;
 			}
 
-			bool ok = script_value<R>::pop(mCurrentState, result, -1);
-			lua_pop(mCurrentState, 1);
+			bool ok = script_value<R>::pop(mCurrentState, result);
 #ifdef _DEBUG
 			int top2 = lua_gettop(mCurrentState);
 			assert(top1 == top2 && "The stack has become corrupt");
@@ -183,8 +182,7 @@ namespace prototype
 				return false;
 			}
 
-			bool ok = script_value<R>::pop(mCurrentState, result, -1);
-			lua_pop(mCurrentState, 1);
+			bool ok = script_value<R>::pop(mCurrentState, result);
 #ifdef _DEBUG
 			int top2 = lua_gettop(mCurrentState);
 			assert(top1 == top2 && "The stack has become corrupt");
@@ -214,8 +212,7 @@ namespace prototype
 				return false;
 			}
 
-			bool ok = script_value<R>::pop(mCurrentState, result, -1);
-			lua_pop(mCurrentState, 1);
+			bool ok = script_value<R>::pop(mCurrentState, result);
 #ifdef _DEBUG
 			int top2 = lua_gettop(mCurrentState);
 			assert(top1 == top2 && "The stack has become corrupt");
@@ -246,8 +243,7 @@ namespace prototype
 				return false;
 			}
 
-			bool ok = script_value<R>::pop(mCurrentState, result, -1);
-			lua_pop(mCurrentState, 1);
+			bool ok = script_value<R>::pop(mCurrentState, result);
 #ifdef _DEBUG
 			int top2 = lua_gettop(mCurrentState);
 			assert(top1 == top2 && "The stack has become corrupt");
@@ -279,8 +275,7 @@ namespace prototype
 				return false;
 			}
 
-			bool ok = script_value<R>::pop(mCurrentState, result, -1);
-			lua_pop(mCurrentState, 1);
+			bool ok = script_value<R>::pop(mCurrentState, result);
 #ifdef _DEBUG
 			int top2 = lua_gettop(mCurrentState);
 			assert(top1 == top2 && "The stack has become corrupt");

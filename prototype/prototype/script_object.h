@@ -64,14 +64,14 @@ namespace prototype
 
 	public:
 		//
-		// Removes a SafePointer reference
+		// Removes a ScriptObjectPtr reference from this object. This is used to handle notifications when this object is deleted.
 		// @param ptr
-		void unreferencePointer(ScriptObject** ptr);
+		void detachPointer(ScriptObject** ptr);
 
 		//
-		// Registers a safe pointer reference
+		// Attaches a ScriptObjectPtr reference. This is used to handle notifications when this object is deleted.
 		// @param ptr
-		void referencePointer(ScriptObject** ptr);
+		void attachPointer(ScriptObject** ptr);
 
 	private:
 		std::list<ScriptObject**> mSafePointerReferences;
@@ -89,25 +89,25 @@ namespace prototype
 
 		ScriptObjectPtr(const ScriptObjectPtr<T>& other) : mPointer(const_cast<T*>(static_cast<const T*>(other.mPointer))) {
 			if(mPointer != NULL)
-				mPointer->referencePointer(&mPointer);
+				mPointer->attachPointer(&mPointer);
 		}
 
 		ScriptObjectPtr(T* ptr) : mPointer(ptr) {
 			if(mPointer != NULL)
-				mPointer->referencePointer(&mPointer);
+				mPointer->attachPointer(&mPointer);
 		}
 
 		virtual ~ScriptObjectPtr() {
 			if(mPointer)
-				mPointer->unreferencePointer(&mPointer);
+				mPointer->detachPointer(&mPointer);
 		}
 		
 		void set(T* ptr) {
 			if(mPointer != NULL)
-				mPointer->unreferencePointer(&mPointer);
+				mPointer->detachPointer(&mPointer);
 			mPointer = ptr;
 			if(mPointer != NULL)
-				mPointer->referencePointer(&mPointer);
+				mPointer->attachPointer(&mPointer);
 		}
 
 		T& operator*() {

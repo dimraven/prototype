@@ -12,22 +12,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="prototype\class_definition.h" />
+    <ClInclude Include="prototype\dictionary.h" />
     <ClInclude Include="prototype\script.h" />
     <ClInclude Include="prototype\script_invoker.h" />
     <ClInclude Include="prototype\script_object.h" />
     <ClInclude Include="prototype\script_reference.h" />
-    <ClInclude Include="prototype\script_result.h" />
     <ClInclude Include="prototype\script_value.h" />
     <ClInclude Include="prototype\wrapper_for_classes.h" />
     <ClInclude Include="prototype\wrapper_for_methods.h" />
     <ClInclude Include="prototype\wrapper_for_script_objects.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="prototype\dictionary.cpp" />
     <ClCompile Include="prototype\script.cpp" />
     <ClCompile Include="prototype\script_invoker.cpp" />
     <ClCompile Include="prototype\script_object.cpp" />
     <ClCompile Include="prototype\script_reference.cpp" />
-    <ClCompile Include="prototype\script_result.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B4B18EB9-5C1F-411C-B96B-46CC6083E7F6}</ProjectGuid>
