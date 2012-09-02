@@ -27,6 +27,7 @@ namespace prototype
 		{
 			std::cerr << "Cannot pop unknown type: " << typeid(value_type).name() << std::endl;
 			lua_pop(L, 1);
+			return true;
 		}
 
 		static void push(lua_State* L, value_type& value)
