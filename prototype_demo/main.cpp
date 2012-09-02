@@ -22,7 +22,8 @@ int main()
 	Script::bind<GameWindow>()
 		.addMethod("open", &GameWindow::open)
 		.addMethod("close", &GameWindow::close);
-	Script::bind<DrawableObject>();
+	Script::bind<DrawableObject>()
+		.addMethod("setMetaData", &DrawableObject::setMetaData);
 	Script::bind<GameObject>()
 		.addMethod("addBehaviour", &GameObject::addBehaviour)
 		.addMethod("removeBehaviour", &GameObject::removeBehaviour);

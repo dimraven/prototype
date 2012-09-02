@@ -9,3 +9,15 @@ DrawableObject::DrawableObject()
 DrawableObject::~DrawableObject()
 {
 }
+
+void DrawableObject::setMetaData(Dictionary dict)
+{
+	mMetaData = dict;
+	std::string imageSrc = dict.getString("imageSrc");
+}
+
+void DrawableObject::onMetaDataSet()
+{
+	invoke("onMetaDataSet");
+}
+

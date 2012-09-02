@@ -108,5 +108,8 @@
     <None Include="bin\data\scenes\scene0.lua">
       <Filter>Resource Files\data\scenes</Filter>
     </None>
+    <None Include="bin\data\ships\player2.lua">
+      <Filter>Resource Files\data\ships</Filter>
+    </None>
   </ItemGroup>
 </Project>

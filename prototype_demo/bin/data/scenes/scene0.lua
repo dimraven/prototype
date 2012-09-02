@@ -12,14 +12,14 @@ function Scene0_Definition:onLoad()
 	local objects = {}
 
 	-- player1
-	local player1 = Ship("John Doe")
+	local player1 = Ship("John Doe", "data.ships.player1")
 	player1:addBehaviour(ShipControllerBehaviour(35.0))
 	player1:addBehaviour(KillableBehaviour(100))
 	table.insert(objects, player1)
 	-- /player1
 	
 	-- player2
-	local player2 = Ship("Mr. Anderson")
+	local player2 = Ship("Mr. Anderson", "data.ships.player2")
 	player2:addBehaviour(ShipControllerBehaviour(35.0))
 	player2:addBehaviour(KillableBehaviour(100))
 	table.insert(objects, player2)

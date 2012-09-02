@@ -19,7 +19,11 @@ namespace prototype
 			return;
 
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
-		lua_pcall(mCurrentState, 1, 0, NULL);
+		if(lua_pcall(mCurrentState, 1, 0, NULL) != 0)
+		{
+			std::cerr << "ERROR " << lua_tostring(mCurrentState, -1) << std::endl;
+			lua_pop(mCurrentState, 1);
+		}
 
 #ifdef _DEBUG
 		int currentStack = lua_gettop(mCurrentState);

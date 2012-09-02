@@ -15,7 +15,16 @@ public:
 	DrawableObject();
 	virtual ~DrawableObject();
 
+	//
+	// Sets metadata associated with this drawable object
+	void setMetaData(Dictionary metadata);
 
+	//
+	// Method called when metadata is assigned to this object.
+	virtual void onMetaDataSet();
+
+private:
+	Dictionary mMetaData;
 };
 
 #endif
