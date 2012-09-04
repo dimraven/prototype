@@ -44,6 +44,9 @@
     <ClInclude Include="prototype\dictionary.h">
       <Filter>Source Files\prototype</Filter>
     </ClInclude>
+    <ClInclude Include="prototype\wrapper_for_functions.h">
+      <Filter>Source Files\prototype</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="prototype\script.cpp">
@@ -59,6 +62,9 @@
       <Filter>Source Files\prototype</Filter>
     </ClCompile>
     <ClCompile Include="prototype\dictionary.cpp">
+      <Filter>Source Files\prototype</Filter>
+    </ClCompile>
+    <ClCompile Include="prototype\wrapper_for_functions.cpp">
       <Filter>Source Files\prototype</Filter>
     </ClCompile>
   </ItemGroup>

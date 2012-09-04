@@ -1,6 +1,7 @@
 #include "script.h"
 #include "script_object.h"
 #include <iostream>
+#include <stdarg.h>
 
 namespace prototype
 {
@@ -46,6 +47,26 @@ namespace prototype
 		gLuaState = NULL;
 	}
 
+	void lua_hook_function(lua_State *L, lua_Debug *ar)
+	{
+	}
+
+	void Script::evaluatef(const char* fmt, ...)
+	{
+		char buffer[1024];
+		va_list args;
+		va_start(args, fmt); 
+		vsprintf(buffer, fmt, args);
+		va_end(args);
+
+		if(luaL_loadstring(gLuaState, buffer) != 0)
+		{
+			std::string err = lua_tostring(gLuaState, -1);
+			std::cerr << "Could not evaluate string \"" << buffer << "\": " << std::endl << err.c_str() << std::endl;
+			lua_pop(gLuaState, 1);
+		}
+	}
+	
 	void Script::loadFile(const char* pathToFile)
 	{
 		int res = luaL_loadfile(gLuaState, pathToFile);
@@ -65,5 +86,12 @@ namespace prototype
 				lua_pop(gLuaState, 1);
 			}
 		}
+	}
+
+	void Script::bind(const char *funcName, void (*funcPtr)())
+	{
+		lua_pushlightuserdata(gLuaState, funcPtr);
+		lua_pushcclosure(gLuaState, &lua_function_void_0args, 1);
+		lua_setglobal(gLuaState, funcName);
 	}
 }

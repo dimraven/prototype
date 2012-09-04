@@ -23,6 +23,14 @@ public:
 	// Method called when metadata is assigned to this object.
 	virtual void onMetaDataSet();
 
+	//
+	// Add this item to the scene
+	void addToScene();
+
+	//
+	//
+	void removeFromScene();
+
 private:
 	Dictionary mMetaData;
 };

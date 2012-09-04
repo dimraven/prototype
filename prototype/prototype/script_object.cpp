@@ -42,7 +42,8 @@ namespace prototype
 		lua_pushlightuserdata(mCurrentState, this);
 		lua_settable(mCurrentState, -3);
 		lua_pop(mCurrentState, 1);
-
+		
+		invoke("onAdd");
 		if(!onAdd())
 		{
 			unregisterObject();
@@ -86,7 +87,8 @@ namespace prototype
 	{
 		assert(mScriptRef != 0 && "You are trying to unregister the same object twice");
 		assert(mCurrentState != NULL && "You are trying to unregister the same object twice");
-
+		
+		invoke("onDelete", 10);
 		onRemove();
 		
 		// Set _instance to nil
@@ -113,13 +115,11 @@ namespace prototype
 
 	bool ScriptObject::onAdd()
 	{
-		invoke("onAdd");
 		return true;
 	}
 
 	void ScriptObject::onRemove()
 	{
-		invoke("onDelete", 10);
 	}
 
 	void ScriptObject::detachPointer(ScriptObject** ptr)

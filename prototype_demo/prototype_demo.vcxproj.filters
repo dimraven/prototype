@@ -82,7 +82,7 @@
     <ClInclude Include="scene_definition.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="bin\data\ships\player1lua">
+    <ClInclude Include="bin\data\ships\player1.lua">
       <Filter>Resource Files\data\ships</Filter>
     </ClInclude>
   </ItemGroup>

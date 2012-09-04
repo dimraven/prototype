@@ -21,3 +21,10 @@ void DrawableObject::onMetaDataSet()
 	invoke("onMetaDataSet");
 }
 
+void DrawableObject::addToScene()
+{
+}
+
+void DrawableObject::removeFromScene()
+{
+}

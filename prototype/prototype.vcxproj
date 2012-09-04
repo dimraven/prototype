@@ -19,6 +19,7 @@
     <ClInclude Include="prototype\script_reference.h" />
     <ClInclude Include="prototype\script_value.h" />
     <ClInclude Include="prototype\wrapper_for_classes.h" />
+    <ClInclude Include="prototype\wrapper_for_functions.h" />
     <ClInclude Include="prototype\wrapper_for_methods.h" />
     <ClInclude Include="prototype\wrapper_for_script_objects.h" />
   </ItemGroup>
@@ -28,6 +29,7 @@
     <ClCompile Include="prototype\script_invoker.cpp" />
     <ClCompile Include="prototype\script_object.cpp" />
     <ClCompile Include="prototype\script_reference.cpp" />
+    <ClCompile Include="prototype\wrapper_for_functions.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B4B18EB9-5C1F-411C-B96B-46CC6083E7F6}</ProjectGuid>
@@ -77,7 +79,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -95,7 +97,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
