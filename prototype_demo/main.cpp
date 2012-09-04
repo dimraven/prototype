@@ -17,6 +17,15 @@ int cRoundf(int val1, float val2)
 	return (int)(res + 0.5f);
 }
 
+void printDictionary(Dictionary dict)
+{
+	std::cout << "value1 = " << dict.getString("value1").c_str() << std::endl;
+	std::cout << "value1 = " << dict.getInt("value1") << std::endl;
+	std::cout << "value2 = " << dict.getInt("value2") << std::endl;
+	std::cout << "value2 = " << dict.getFloat("value2") << std::endl;
+
+}
+
 int main()
 {
 	// 1. Initialize the script engine
@@ -42,6 +51,7 @@ int main()
 
 	// Bind functions
 	Script::bind("cRoundf", &cRoundf);
+	Script::bind("printDictionary", &printDictionary);
 
 	// 3. Load and execute the lua main file
 	Script::loadFile("main.lua");

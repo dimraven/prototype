@@ -112,7 +112,24 @@ namespace prototype
 		lua_pop(mCurrentState, 2);
 		return result;
 	}
+	
+	int Dictionary::getInt(const char* key) const
+	{
+		if(mScriptRef == 0 || key == NULL)
+			return 0;
 
+		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+		lua_pushstring(mCurrentState, key);
+		lua_gettable(mCurrentState, -2);
+
+		int result = 0;
+
+		if(lua_isnumber(mCurrentState, -1))
+			result = lua_tointeger(mCurrentState, -1);
+
+		lua_pop(mCurrentState, 2);
+		return result;
+	}
 	
 	ScriptObject* Dictionary::getPointer(const char* key) const
 	{
@@ -147,5 +164,17 @@ namespace prototype
 
 		lua_pop(mCurrentState, 2);
 		return Dictionary(mCurrentState, 0);
+	}
+
+	Dictionary& Dictionary::operator=(const Dictionary& other)
+	{
+		if(other.mScriptRef != 0)
+		{
+			mCurrentState = other.mCurrentState;
+			lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, other.mScriptRef);
+			mScriptRef = luaL_ref(mCurrentState, LUA_REGISTRYINDEX);
+		}
+
+		return *this;
 	}
 }

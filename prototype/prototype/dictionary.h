@@ -52,6 +52,11 @@ namespace prototype
 		bool getBool(const char* key) const;
 		
 		//
+		// @return An integer value from inside this dictionary based on the supplied key. 
+		//	If value isn't found or isn't convertable then returns "0".
+		int getInt(const char* key) const;
+		
+		//
 		// @return A ScriptObject pointer from inside this dictionary based on the supplied key. 
 		//	If value isn't found or isn't convertable then returns NULL.
 		ScriptObject* getPointer(const char* key) const;
@@ -67,6 +72,10 @@ namespace prototype
 		inline int getId() const {
 			return mScriptRef;
 		}
+
+		//
+		//
+		Dictionary& operator=(const Dictionary& other);
 
 	private:
 		int mScriptRef;
