@@ -41,7 +41,7 @@ The Player class looks like this on the C++ side:
         
         inline void onUpdateTick()
         {
-            Script::invoke(this, "onUpdateTick");
+            invoke("onUpdateTick");
         }
         
         void moveTo(Player* target)
@@ -208,12 +208,36 @@ The delete function can take any number of [1, n) arguments. Internally the dele
             delete obj;
         }
     }
+    
+### Safe pointers ###
+
+When calling "delete" on an object we can manually handle it by overloading the **onRemove** method to clean up any
+dead references. Although this isn't possibly in some scenarios. That is why a helper/wrapper class called **ScriptObjectPtr**
+was created. Example code in C++:
+
+    GameObject* gameObject = new GameObject();
+    gameObject->registerObject();
+
+    ScriptObjectPtr<GameObject> safePtr(gameObject);
+    if(safePtr.exists()) {
+        std::cout << "Object exists" << std::endl;
+    }
+    
+    gameObject->unregisterObject();
+    delete gameObject;
+    if(!safePtr.exists()) {
+        std::cout << "Object does not exists" << std::endl;
+    }
+
+The output of this code will be:
+
+    > Object exists
+    > Object does not exists
+    
+All pointers inside the ScriptObjectPtr will be automatically set to NULL when we either call the 
+unregisterObject method OR calling **delete** from the script code.
 
 ### Future plans ###
-
-I have plans on reviewing if boost shared pointer is usable, but the problem still exist that we in that 
-case are required to trust/wait for the garbage collector to delete all the potential instances of the associated table.
-It might not be usable, but we'll see. It might be possible.
 
 I also have to implement some kind of failsafe mechanism if the user deletes a scriptable object without unregistering it.
 If the application crashes then we should at least give the developer a understandable error so that it can be fixed 
