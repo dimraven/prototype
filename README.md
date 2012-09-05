@@ -37,6 +37,14 @@ It gives us power of rapid development before the optimization stage (where we m
 * Remote debugging 
 * Replace std::list with memory_pool allocated linked list implementation for faster notification on deleted instances.
 
+### Demo application ###
+
+The project **prototype_demo** demonstrates how to use the following features:
+
+* Inheritance by having to three levels of classes: "ScriptObject -> DrawableObject -> GameObject"
+* Extending methods from LUA scripts by creating a GameObject specialization found in **ship.lua**
+* Creating custom behaviours defined in the script code and bind them to game objects
+
 ### Credits ###
 
 http://www.lua.org - The Programming Language Lua.
