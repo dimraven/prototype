@@ -23,7 +23,6 @@ void printDictionary(Dictionary dict)
 	std::cout << "value1 = " << dict.getInt("value1") << std::endl;
 	std::cout << "value2 = " << dict.getInt("value2") << std::endl;
 	std::cout << "value2 = " << dict.getFloat("value2") << std::endl;
-
 }
 
 int main()

@@ -1,7 +1,6 @@
 #ifndef _PROTOTYPE_SCRIPT_OBJECT_H_
 #define _PROTOTYPE_SCRIPT_OBJECT_H_
 
-#include <list>
 #include "script_invoker.h"
 #include "class_definition.h"
 #include "script.h"
@@ -9,6 +8,18 @@
 namespace prototype
 {
 	class ScriptObject;
+
+	//
+	// Linked list structure used to handle the ScriptObjectPtr's
+	struct ScriptObjectEntry
+	{
+		ScriptObjectEntry() : prev(0), ptr(0), next(0) {}
+		~ScriptObjectEntry() {}
+
+		ScriptObjectEntry* prev;
+		ScriptObject** ptr;
+		ScriptObjectEntry* next;
+	};
 
 	//
 	// Base class for all scriptable object types.
@@ -65,16 +76,20 @@ namespace prototype
 	public:
 		//
 		// Removes a ScriptObjectPtr reference from this object. This is used to handle notifications when this object is deleted.
-		// @param ptr
-		void detachPointer(ScriptObject** ptr);
+		// @param entry
+		void detachPointer(ScriptObjectEntry* entry);
 
 		//
 		// Attaches a ScriptObjectPtr reference. This is used to handle notifications when this object is deleted.
 		// @param ptr
-		void attachPointer(ScriptObject** ptr);
+		ScriptObjectEntry* attachPointer(ScriptObject** ptr);
+
+		//
+		// Release all resources and pointer references
+		void releasePointers();
 
 	private:
-		std::list<ScriptObject**> mSafePointerReferences;
+		ScriptObjectEntry* mScriptObjectPtrLastEntry;
 	};
 
 	//
@@ -84,30 +99,30 @@ namespace prototype
 	class ScriptObjectPtr
 	{
 	public:
-		ScriptObjectPtr() : mPointer(NULL) {
+		ScriptObjectPtr() : mPointer(NULL), mLinkedListEntry(NULL) {
 		}
 
-		ScriptObjectPtr(const ScriptObjectPtr<T>& other) : mPointer(const_cast<T*>(static_cast<const T*>(other.mPointer))) {
+		ScriptObjectPtr(const ScriptObjectPtr<T>& other) : mPointer(const_cast<T*>(static_cast<const T*>(other.mPointer))), mLinkedListEntry(NULL) {
 			if(mPointer != NULL)
-				mPointer->attachPointer(&mPointer);
+				mLinkedListEntry = mPointer->attachPointer(&mPointer);
 		}
 
-		ScriptObjectPtr(T* ptr) : mPointer(ptr) {
+		ScriptObjectPtr(T* ptr) : mPointer(ptr), mLinkedListEntry(NULL) {
 			if(mPointer != NULL)
-				mPointer->attachPointer(&mPointer);
+				mLinkedListEntry = mPointer->attachPointer(&mPointer);
 		}
 
 		virtual ~ScriptObjectPtr() {
 			if(mPointer)
-				mPointer->detachPointer(&mPointer);
+				mPointer->detachPointer(mLinkedListEntry);
 		}
 		
 		void set(T* ptr) {
 			if(mPointer != NULL)
-				mPointer->detachPointer(&mPointer);
+				mPointer->detachPointer(mLinkedListEntry);
 			mPointer = ptr;
 			if(mPointer != NULL)
-				mPointer->attachPointer(&mPointer);
+				mLinkedListEntry = mPointer->attachPointer(&mPointer);
 		}
 
 		T& operator*() {
@@ -182,6 +197,7 @@ namespace prototype
 
 	private:
 		ScriptObject* mPointer;
+		ScriptObjectEntry* mLinkedListEntry;
 	};
 }
 

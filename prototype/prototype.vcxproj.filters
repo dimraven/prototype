@@ -47,6 +47,9 @@
     <ClInclude Include="prototype\wrapper_for_functions.h">
       <Filter>Source Files\prototype</Filter>
     </ClInclude>
+    <ClInclude Include="prototype\script_ptr.h">
+      <Filter>Source Files\prototype</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="prototype\script.cpp">
@@ -65,6 +68,9 @@
       <Filter>Source Files\prototype</Filter>
     </ClCompile>
     <ClCompile Include="prototype\wrapper_for_functions.cpp">
+      <Filter>Source Files\prototype</Filter>
+    </ClCompile>
+    <ClCompile Include="prototype\script_ptr.cpp">
       <Filter>Source Files\prototype</Filter>
     </ClCompile>
   </ItemGroup>

@@ -16,6 +16,7 @@
     <ClInclude Include="prototype\script.h" />
     <ClInclude Include="prototype\script_invoker.h" />
     <ClInclude Include="prototype\script_object.h" />
+    <ClInclude Include="prototype\script_ptr.h" />
     <ClInclude Include="prototype\script_reference.h" />
     <ClInclude Include="prototype\script_value.h" />
     <ClInclude Include="prototype\wrapper_for_classes.h" />
@@ -28,6 +29,7 @@
     <ClCompile Include="prototype\script.cpp" />
     <ClCompile Include="prototype\script_invoker.cpp" />
     <ClCompile Include="prototype\script_object.cpp" />
+    <ClCompile Include="prototype\script_ptr.cpp" />
     <ClCompile Include="prototype\script_reference.cpp" />
     <ClCompile Include="prototype\wrapper_for_functions.cpp" />
   </ItemGroup>

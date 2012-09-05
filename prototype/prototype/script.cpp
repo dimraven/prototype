@@ -1,12 +1,11 @@
 #include "script.h"
 #include "script_object.h"
+#include "script_ptr.h"
 #include <iostream>
 #include <stdarg.h>
 
 namespace prototype
 {
-	lua_State* gLuaState = NULL;
-
 	int lua_delete(lua_State* L)
 	{
 		int numobjects = lua_gettop(L);
@@ -25,14 +24,14 @@ namespace prototype
 
 		return 0;
 	}
-
+	
 	void Script::initialize()
 	{
 		gLuaState = luaL_newstate();
 		luaL_openlibs(gLuaState);
 
 		// Make sure that delete is available in lua
-		lua_register(gLuaState, "delete", lua_delete);
+		bind("delete", lua_delete);
 
 		// Register script object
 		bind<ScriptObject>();
@@ -47,8 +46,9 @@ namespace prototype
 		gLuaState = NULL;
 	}
 
-	void lua_hook_function(lua_State *L, lua_Debug *ar)
+	lua_State* Script::getLuaState()
 	{
+		return gLuaState;
 	}
 
 	void Script::evaluatef(const char* fmt, ...)
@@ -86,6 +86,11 @@ namespace prototype
 				lua_pop(gLuaState, 1);
 			}
 		}
+	}
+
+	void Script::bind(const char* funcName, lua_CFunction function)
+	{
+		lua_register(gLuaState, funcName, function);
 	}
 
 	void Script::bind(const char *funcName, void (*funcPtr)())

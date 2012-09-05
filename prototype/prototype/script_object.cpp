@@ -19,7 +19,7 @@ namespace prototype
 	////////////////////////////////////////////////////////////////
 
 	ScriptObject::ScriptObject()
-		: ScriptInvoker()
+		: ScriptInvoker(), mScriptObjectPtrLastEntry(NULL)
 	{}
 
 	ScriptObject::~ScriptObject()
@@ -29,21 +29,10 @@ namespace prototype
 	bool ScriptObject::registerObject()
 	{
 		assert(mScriptRef == 0 && "You are trying to register the same object twice");
-		assert(mCurrentState == NULL && "You are trying to unregister the same object twice");
 
-		mCurrentState = gLuaState;
-		
 		// Get the global lua state
-		mScriptRef = getClassDef()->createScriptRepresentation(mCurrentState);
+		mScriptRef = getClassDef()->instantiate(mCurrentState, this);
 		
-		// Set _instacne 
-		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
-		lua_pushstring(mCurrentState, "_instance");
-		lua_pushlightuserdata(mCurrentState, this);
-		lua_settable(mCurrentState, -3);
-		lua_pop(mCurrentState, 1);
-		
-		invoke("onAdd");
 		if(!onAdd())
 		{
 			unregisterObject();
@@ -56,22 +45,14 @@ namespace prototype
 	bool ScriptObject::registerObject(int refId)
 	{
 		assert(mScriptRef == 0 && "You are trying to register the same object twice");
-		assert(mCurrentState == NULL && "You are trying to unregister the same object twice");
 
 		mScriptRef = refId;
-		mCurrentState = gLuaState;
 		
 		lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
 		lua_pushstring(mCurrentState, "_instance");
 		lua_pushlightuserdata(mCurrentState, this);
 		lua_settable(mCurrentState, -3);
 		
-		// Assign the _className to this classes name. Used for type validation when receiving
-		// this object from script.
-		lua_pushstring(mCurrentState, "_className");
-		lua_pushstring(mCurrentState, getClassDef()->getClassName().c_str());
-		lua_settable(mCurrentState, -3);
-
 		lua_pop(mCurrentState, 1);
 
 		if(!onAdd())
@@ -86,9 +67,7 @@ namespace prototype
 	void ScriptObject::unregisterObject()
 	{
 		assert(mScriptRef != 0 && "You are trying to unregister the same object twice");
-		assert(mCurrentState != NULL && "You are trying to unregister the same object twice");
 		
-		invoke("onDelete", 10);
 		onRemove();
 		
 		// Set _instance to nil
@@ -101,41 +80,86 @@ namespace prototype
 		luaL_unref(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
 
 		mScriptRef = 0;
-		mCurrentState = NULL;
 
-		
-		std::list<ScriptObject**>::iterator it = mSafePointerReferences.begin();
-		std::list<ScriptObject**>::iterator end = mSafePointerReferences.end();
-		for(; it != end; ++it) {
-			ScriptObject** ptr = *it;
-			*ptr = NULL;
-		}
-		mSafePointerReferences.clear();
+		releasePointers();
 	}
 
 	bool ScriptObject::onAdd()
 	{
+		invoke("onAdd");
 		return true;
 	}
 
 	void ScriptObject::onRemove()
 	{
+		invoke("onRemove", 10);
 	}
-
-	void ScriptObject::detachPointer(ScriptObject** ptr)
+	
+	void ScriptObject::detachPointer(ScriptObjectEntry* entry)
 	{
-		std::list<ScriptObject**>::iterator it = mSafePointerReferences.begin();
-		std::list<ScriptObject**>::iterator end = mSafePointerReferences.end();
-		for(; it != end; ++it) {
-			if( (*it) == ptr ) {
-				mSafePointerReferences.erase(it);
-				return;
+		ScriptObjectEntry* prev = entry->prev;
+		ScriptObjectEntry* next = entry->next;
+
+		if(prev != NULL)
+		{
+			prev->next = next;
+			if(next != NULL)
+			{
+				next->prev = prev;
+			}
+
+			if(entry == mScriptObjectPtrLastEntry) {
+				mScriptObjectPtrLastEntry = entry->prev;
 			}
 		}
+		else
+		{
+			if(next != NULL)
+			{
+				next->prev = NULL;
+			}
+		}
+
+		free(entry);
 	}
 
-	void ScriptObject::attachPointer(ScriptObject** ptr)
+	ScriptObjectEntry* ScriptObject::attachPointer(ScriptObject** ptr)
 	{
-		mSafePointerReferences.push_back(ptr);
+		if(mScriptObjectPtrLastEntry == NULL)
+		{
+			mScriptObjectPtrLastEntry = reinterpret_cast<ScriptObjectEntry*>(malloc(sizeof(ScriptObjectEntry)));
+			memset(mScriptObjectPtrLastEntry, 0, sizeof(ScriptObjectEntry));
+		}
+		else
+		{
+			ScriptObjectEntry* next = reinterpret_cast<ScriptObjectEntry*>(malloc(sizeof(ScriptObjectEntry)));
+			memset(next, 0, sizeof(ScriptObjectEntry));
+			mScriptObjectPtrLastEntry->next = next;
+			next->prev = mScriptObjectPtrLastEntry;
+			mScriptObjectPtrLastEntry = next;
+		}
+
+		mScriptObjectPtrLastEntry->ptr = ptr;
+		return mScriptObjectPtrLastEntry;
 	}
+
+	void ScriptObject::releasePointers()
+	{
+		if(mScriptObjectPtrLastEntry == NULL)
+			return;
+
+		ScriptObjectEntry* entry = mScriptObjectPtrLastEntry;
+		while(entry != NULL) {
+			ScriptObjectEntry* prev = entry->prev;
+
+			ScriptObject** ptr = entry->ptr;
+			*ptr = NULL;
+			free(entry);
+
+			entry = prev;
+		}
+
+		mScriptObjectPtrLastEntry = NULL;
+	}
+
 }

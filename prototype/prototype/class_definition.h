@@ -17,13 +17,16 @@ extern "C"
 
 namespace prototype
 {
+	class ScriptObject;
+
+
 	class ClassDefinition
 	{
 	public:
 		//
 		// Creates a script table wrapper based on a specific class definition.
 		// @return A reference ID used to identify the table on the script-side.
-		virtual int createScriptRepresentation(lua_State* L) = 0;
+		virtual int instantiate(lua_State* L, ScriptObject* ptr) = 0;
 		
 		//
 		// @return The name of the class
@@ -55,7 +58,7 @@ namespace prototype
 		{
 		}
 
-		virtual int createScriptRepresentation(lua_State* L)
+		virtual int instantiate(lua_State* L, ScriptObject* ptr)
 		{
 			int scriptRef = 0;
 #ifdef _DEBUG
@@ -75,13 +78,7 @@ namespace prototype
 
 			// Assigns the value: _instance to this object
 			lua_pushstring(L, "_instance");
-			lua_pushnil(L);
-			lua_settable(L, -3);
-
-			// Assign the _className to this classes name. Used for type validation when receiving
-			// this object from script.
-			lua_pushstring(L, "_className");
-			lua_pushstring(L, mClassName.c_str());
+			lua_pushlightuserdata(L, ptr);
 			lua_settable(L, -3);
 
 			lua_pop(L, 1);
@@ -89,7 +86,6 @@ namespace prototype
 			int top4 = lua_gettop(L);
 			assert(top3 == top4 && "Could not create lua table. Corrupted stack");
 #endif
-
 			return scriptRef;
 		}
 
@@ -252,14 +248,12 @@ namespace prototype
 
 			luaL_getmetatable(L, mMetaTableName.c_str());
 			luaL_setfuncs(L, requiredFuncs, 0);
-			//luaL_register(L, NULL, requiredFuncs);
 			lua_pop(L, 1);
 
 			lua_newtable(L);
 			luaL_getmetatable(L, mMetaTableName.c_str());
 			lua_setmetatable(L, -2 );
 			luaL_setfuncs(L, requiredFuncs, 0);
-			//luaL_register(L, NULL, requiredFuncs);
 			lua_setglobal(L, mClassName.c_str());
 
 			// Inheritance?
@@ -268,11 +262,7 @@ namespace prototype
 				std::map<std::string, method_pointer_wrapper*>::iterator it = methods.begin();
 				std::map<std::string, method_pointer_wrapper*>::iterator end = methods.end();
 				for(; it != end; ++it) {
-					if(strcmp("__call", it->first.c_str())  != 0 &&
-						strcmp("init", it->first.c_str())  != 0)
-					{
-						addMethod(L, it->first.c_str(), it->second);
-					}
+					addMethod(L, it->first.c_str(), it->second);
 				}
 
 				// The "funcs" map does now contain names and function pointers to the rest of the functions
