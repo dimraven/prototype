@@ -28,7 +28,6 @@ instance2:identify(instance1)
 instance2:identify(instance2)
 
 print("")
-
 print("==== Example overriding C++ classes using Lua")
 LuaClass = class(SubClass1, function(self)
 	SubClass1.init(self)
@@ -51,6 +50,7 @@ local instance3 = LuaClass()
 instance3:sayHello()
 instance3:identify(instance2)
 
+print("")
 print("==== Example calling C++ functions with ScriptObject pointers ====")
 tryCallingMethodWithBaseClass(instance1)
 tryCallingMethodWithBaseClass(instance2)
@@ -60,5 +60,12 @@ tryCallingMethodWithSubClass1(instance2)
 local instance4 = SubClass2()
 tryCallingMethodWithSubClass1(instance4)
 
+print("")
 print("==== Example calling C++ functions with classes inherited from Script ====")
 tryCallingMethodWithSubClass1(instance3)
+
+print("")
+print("==== Example with trying to call functions with deleted pointers ====")
+delete(instance1)
+instance1:sayHello()
+tryCallingMethodWithSubClass1(instance1)

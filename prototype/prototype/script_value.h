@@ -119,6 +119,10 @@ namespace prototype
 						std::cerr << "Cannot cast pointer to: " << typeid(Clazz).name() << std::endl;
 					}
 				}
+				else if(lua_isnil(L, -1))
+				{
+					std::cerr << "The instance you are trying to use is deleted" << std::endl;
+				}
 				lua_pop(L, 1);
 			}
 
