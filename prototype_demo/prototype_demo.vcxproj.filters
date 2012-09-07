@@ -9,82 +9,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Resource Files\game">
-      <UniqueIdentifier>{a3321cbb-56f7-4586-9646-6d87f9b869ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\game\behaviours">
-      <UniqueIdentifier>{83753c04-b93e-43c1-a722-e1654640d463}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\input">
-      <UniqueIdentifier>{8ceacb57-4064-4260-b240-1910fff634cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\data">
-      <UniqueIdentifier>{f7c4319c-c0e9-47e0-b804-78abdb2c364d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\data\scenes">
-      <UniqueIdentifier>{aa4d27bb-fc96-49d4-b536-04d6d14e42c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\data\ships">
-      <UniqueIdentifier>{37b0b49f-1d2d-4c50-96bf-4d65c503c9c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\data\images">
-      <UniqueIdentifier>{7ebe3356-c34d-4521-850a-41d9bcddee6e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game_object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game_window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="drawable_object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="behaviour.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="input\keyboard_event_observer.cpp">
-      <Filter>Source Files\input</Filter>
-    </ClCompile>
-    <ClCompile Include="scene_definition.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="game_object.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game_window.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="drawable_object.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="behaviour.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="input\keyboard_event_listener.h">
-      <Filter>Source Files\input</Filter>
-    </ClInclude>
-    <ClInclude Include="input\keyboard_event_observer.h">
-      <Filter>Source Files\input</Filter>
-    </ClInclude>
-    <ClInclude Include="scene_definition.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bin\data\ships\player1.lua">
-      <Filter>Resource Files\data\ships</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\class.lua">
@@ -92,24 +21,6 @@
     </None>
     <None Include="bin\main.lua">
       <Filter>Resource Files</Filter>
-    </None>
-    <None Include="bin\game\astroidsgame.lua">
-      <Filter>Resource Files\game</Filter>
-    </None>
-    <None Include="bin\game\ship.lua">
-      <Filter>Resource Files\game</Filter>
-    </None>
-    <None Include="bin\game\behaviours\shipcontrollerbehaviour.lua">
-      <Filter>Resource Files\game\behaviours</Filter>
-    </None>
-    <None Include="bin\game\behaviours\killablebehaviour.lua">
-      <Filter>Resource Files\game\behaviours</Filter>
-    </None>
-    <None Include="bin\data\scenes\scene0.lua">
-      <Filter>Resource Files\data\scenes</Filter>
-    </None>
-    <None Include="bin\data\ships\player2.lua">
-      <Filter>Resource Files\data\ships</Filter>
     </None>
   </ItemGroup>
 </Project>

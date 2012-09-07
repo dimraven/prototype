@@ -40,15 +40,15 @@
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)out\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
-    <IncludePath>../lib/lua/lua-5.2.1/src;../prototype;../lib/glfw/glfw-2.7.6/include;$(IncludePath)</IncludePath>
-    <LibraryPath>../lib/lua/lua-5.2.1/lib;../bin;../lib/glfw/glfw-2.7.6/support/msvc100/Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>../lib/lua/lua-5.2.1/src;../prototype;$(IncludePath)</IncludePath>
+    <LibraryPath>../lib/lua/lua-5.2.1/lib;../bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)out\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>../lib/lua/lua-5.2.1/src;../prototype;../lib/glfw/glfw-2.7.6/include;$(IncludePath)</IncludePath>
-    <LibraryPath>../lib/lua/lua-5.2.1/lib;../bin;../lib/glfw/glfw-2.7.6/support/msvc100/Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>../lib/lua/lua-5.2.1/src;../prototype;$(IncludePath)</IncludePath>
+    <LibraryPath>../lib/lua/lua-5.2.1/lib;../bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -61,7 +61,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>prototype_d.lib;lua.lib;GLFW.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>prototype_d.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,38 +79,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>prototype.lib;lua.lib;GLFW.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>prototype.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="behaviour.cpp" />
-    <ClCompile Include="drawable_object.cpp" />
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="game_object.cpp" />
-    <ClCompile Include="game_window.cpp" />
-    <ClCompile Include="input\keyboard_event_observer.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="scene_definition.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="behaviour.h" />
-    <ClInclude Include="bin\data\ships\player1.lua" />
-    <ClInclude Include="drawable_object.h" />
-    <ClInclude Include="game.h" />
-    <ClInclude Include="game_object.h" />
-    <ClInclude Include="game_window.h" />
-    <ClInclude Include="input\keyboard_event_listener.h" />
-    <ClInclude Include="input\keyboard_event_observer.h" />
-    <ClInclude Include="scene_definition.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\class.lua" />
-    <None Include="bin\data\scenes\scene0.lua" />
-    <None Include="bin\data\ships\player2.lua" />
-    <None Include="bin\game\astroidsgame.lua" />
-    <None Include="bin\game\behaviours\killablebehaviour.lua" />
-    <None Include="bin\game\behaviours\shipcontrollerbehaviour.lua" />
-    <None Include="bin\game\ship.lua" />
     <None Include="bin\main.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
