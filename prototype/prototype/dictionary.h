@@ -15,6 +15,23 @@ namespace prototype
 	class ScriptObject;
 	class Dictionary;
 
+	//
+	// Implementation for handling iteration inside a script-defined table.
+	// {@code
+	//	Dictionary dict = getGlobalDictionary("someTable");
+	//	DictionaryIterator it = dict.getIterator();
+	//	while(it.hasNext()) {
+	//		std::string key = it.getKey();
+	//		Dictionary dict2 = it.getDictionary();
+	//
+	//		DictionaryIterator it2 = dict2.getIterator();
+	//		while(it2.hasNext()) {
+	//			std::string key2 = it2.getKey();
+	//			// And so forth...
+	//		}
+	//	}
+	// }
+	//
 	class DictionaryIterator
 	{
 	public:
