@@ -7,7 +7,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params != 0)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			lua_pop(L, params);
 			return 0;
 		}

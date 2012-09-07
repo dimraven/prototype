@@ -96,7 +96,8 @@ namespace prototype
 	void Script::bind(const char *funcName, void (*funcPtr)())
 	{
 		lua_pushlightuserdata(gLuaState, funcPtr);
-		lua_pushcclosure(gLuaState, &lua_function_void_0args, 1);
+		lua_pushstring(gLuaState, funcName);
+		lua_pushcclosure(gLuaState, &lua_function_void_0args, 2);
 		lua_setglobal(gLuaState, funcName);
 	}
 }

@@ -287,13 +287,15 @@ namespace prototype
 #endif
 			luaL_getmetatable(L, mMetaTableName.c_str());
 			lua_pushlightuserdata(L, wrapper);
-			lua_pushcclosure(L, wrapper->func, 1);
+			lua_pushstring(L, methodName);
+			lua_pushcclosure(L, wrapper->func, 2);
 			lua_setfield(L, -2, methodName);
 			lua_pop(L, 1);
 
 			lua_getglobal(L, mClassName.c_str());
 			lua_pushlightuserdata(L, wrapper);
-			lua_pushcclosure(L, wrapper->func, 1);
+			lua_pushstring(L, methodName);
+			lua_pushcclosure(L, wrapper->func, 2);
 			lua_setfield(L, -2, methodName);
 			lua_pop(L, 1);
 

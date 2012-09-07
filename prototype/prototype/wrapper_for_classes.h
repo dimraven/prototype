@@ -22,7 +22,12 @@ namespace prototype
 	int lua_method_void_0args(lua_State* L)
 	{
 		int params = lua_gettop(L);
-		assert(params == 1 && "Only the 'self' parameter are allowed as a parameter for this function");
+		if(params <= 0)
+		{
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
+			return 0;
+		}
 
 		Clazz* self;
 
@@ -34,6 +39,12 @@ namespace prototype
 				(method_pointer_wrapper_void_0args<Clazz>*)lua_touserdata(L, lua_upvalueindex(1));
 			(self->*wrapper->methodPtr)();
 		}
+		else
+		{
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid parameters to method with name: " << name << std::endl;
+		}
+
 		return 0;
 	}
 
@@ -47,7 +58,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params < 2)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
 			lua_pop(L, params);
 			return 0;
 		}
@@ -65,6 +77,11 @@ namespace prototype
 				(method_pointer_wrapper_void_1args<Clazz, P1>*)lua_touserdata(L, lua_upvalueindex(1));
 			(self->*wrapper->methodPtr)(p1);
 		}
+		else
+		{
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid parameters to method with name: " << name << std::endl;
+		}
 		
 		return 0;
 	}
@@ -79,7 +96,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params < 3)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
 			lua_pop(L, params);
 			return 0;
 		}
@@ -99,6 +117,11 @@ namespace prototype
 				(method_pointer_wrapper_void_2args<Clazz, P1, P2>*)lua_touserdata(L, lua_upvalueindex(1));
 			(self->*wrapper->methodPtr)(p1, p2);
 		}
+		else
+		{
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid parameters to method with name: " << name << std::endl;
+		}
 
 		return 0;
 	}
@@ -113,7 +136,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params < 4)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
 			lua_pop(L, params);
 			return 0;
 		}
@@ -135,6 +159,11 @@ namespace prototype
 				(method_pointer_wrapper_void_3args<Clazz, P1, P2, P3>*)lua_touserdata(L, lua_upvalueindex(1));
 			(self->*wrapper->methodPtr)(p1, p2, p3);
 		}
+		else
+		{
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid parameters to method with name: " << name << std::endl;
+		}
 
 		return 0;
 	}
@@ -149,7 +178,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params < 5)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
 			lua_pop(L, params);
 			return 0;
 		}
@@ -172,6 +202,11 @@ namespace prototype
 			method_pointer_wrapper_void_4args<Clazz, P1, P2, P3, P4>* wrapper = 
 				(method_pointer_wrapper_void_4args<Clazz, P1, P2, P3, P4>*)lua_touserdata(L, lua_upvalueindex(1));
 			(self->*wrapper->methodPtr)(p1, p2, p3, p4);
+		}
+		else
+		{
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid parameters to method with name: " << name << std::endl;
 		}
 
 		lua_pop(L, params);
@@ -197,12 +232,15 @@ namespace prototype
 			}
 			else
 			{
+				const char* name = lua_tostring(L, lua_upvalueindex(2));
+				std::cerr << "Invalid parameters to method with name: " << name << std::endl;
 				lua_pushnil(L);
 			}
 		}
 		else
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
 			lua_pop(L, params);
 			lua_pushnil(L);
 		}
@@ -232,12 +270,15 @@ namespace prototype
 			}
 			else
 			{
+				const char* name = lua_tostring(L, lua_upvalueindex(2));
+				std::cerr << "Invalid parameters to method with name: " << name << std::endl;
 				lua_pushnil(L);
 			}
 		}
 		else
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
 			lua_pop(L, params);
 			lua_pushnil(L);
 		}
@@ -269,12 +310,15 @@ namespace prototype
 			}
 			else
 			{
+				const char* name = lua_tostring(L, lua_upvalueindex(2));
+				std::cerr << "Invalid parameters to method with name: " << name << std::endl;
 				lua_pushnil(L);
 			}
 		}
 		else
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
 			lua_pop(L, params);
 			lua_pushnil(L);
 		}
@@ -312,12 +356,15 @@ namespace prototype
 			}
 			else
 			{
+				const char* name = lua_tostring(L, lua_upvalueindex(2));
+				std::cerr << "Invalid parameters to method with name: " << name << std::endl;
 				lua_pushnil(L);
 			}
 		}
 		else
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
 			lua_pop(L, params);
 			lua_pushnil(L);
 		}
@@ -353,12 +400,15 @@ namespace prototype
 			}
 			else
 			{
+				const char* name = lua_tostring(L, lua_upvalueindex(2));
+				std::cerr << "Invalid parameters to method with name: " << name << std::endl;
 				lua_pushnil(L);
 			}
 		}
 		else
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters for method with name: " << name << std::endl;
 			lua_pop(L, params);
 			lua_pushnil(L);
 		}

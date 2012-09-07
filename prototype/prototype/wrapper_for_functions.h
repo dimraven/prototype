@@ -21,7 +21,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params == 0)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			return 0;
 		}
 
@@ -36,6 +37,11 @@ namespace prototype
 			F func = (F)lua_touserdata(L, lua_upvalueindex(1));
 			(*func)(p1);
 		}
+		else
+		{ 
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid parameters to function: " << name << std::endl;
+		}
 
 		return 0;
 	}
@@ -46,7 +52,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params < 2)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			lua_pop(L, params);
 			return 0;
 		}
@@ -64,6 +71,11 @@ namespace prototype
 			F func = (F)lua_touserdata(L, lua_upvalueindex(1));
 			(*func)(p1, p2);
 		}
+		else
+		{
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid parameters to function: " << name << std::endl;
+		}
 
 		return 0;
 	}
@@ -74,7 +86,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params < 3)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			lua_pop(L, params);
 			return 0;
 		}
@@ -94,6 +107,11 @@ namespace prototype
 			F func = (F)lua_touserdata(L, lua_upvalueindex(1));
 			(*func)(p1, p2, p3);
 		}
+		else
+		{
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid parameters to function: " << name << std::endl;
+		}
 
 		return 0;
 	}
@@ -104,7 +122,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params < 4)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			lua_pop(L, params);
 			return 0;
 		}
@@ -126,6 +145,11 @@ namespace prototype
 			F func = (F)lua_touserdata(L, lua_upvalueindex(1));
 			(*func)(p1, p2, p3, p4);
 		}
+		else
+		{
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid parameters to function: " << name << std::endl;
+		}
 
 		return 0;
 	}
@@ -137,7 +161,8 @@ namespace prototype
 		int params = lua_gettop(L);
 		if(params == 0)
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			lua_pushnil(L);
 			return 1;
 		}
@@ -168,12 +193,15 @@ namespace prototype
 			}
 			else
 			{
+				const char* name = lua_tostring(L, lua_upvalueindex(2));
+				std::cerr << "Invalid parameters to function: " << name << std::endl;
 				lua_pushnil(L);
 			}
 		}
 		else
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			lua_pushnil(L);
 		}
 
@@ -202,12 +230,15 @@ namespace prototype
 			}
 			else
 			{
+				const char* name = lua_tostring(L, lua_upvalueindex(2));
+				std::cerr << "Invalid parameters to function: " << name << std::endl;
 				lua_pushnil(L);
 			}
 		}
 		else
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			lua_pop(L, params);
 			lua_pushnil(L);
 		}
@@ -239,12 +270,15 @@ namespace prototype
 			}
 			else
 			{
+				const char* name = lua_tostring(L, lua_upvalueindex(2));
+				std::cerr << "Invalid parameters to function: " << name << std::endl;
 				lua_pushnil(L);
 			}
 		}
 		else
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			lua_pop(L, params);
 			lua_pushnil(L);
 		}
@@ -278,12 +312,15 @@ namespace prototype
 			}
 			else
 			{
+				const char* name = lua_tostring(L, lua_upvalueindex(2));
+				std::cerr << "Invalid parameters to function: " << name << std::endl;
 				lua_pushnil(L);
 			}
 		}
 		else
 		{
-			std::cerr << "Invalid num parameters" << std::endl;
+			const char* name = lua_tostring(L, lua_upvalueindex(2));
+			std::cerr << "Invalid num parameters to function:" << name << std::endl;
 			lua_pop(L, params);
 			lua_pushnil(L);
 		}

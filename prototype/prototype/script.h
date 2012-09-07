@@ -65,7 +65,8 @@ namespace prototype
 			lua_State* L = getLuaState();
 
 			lua_pushlightuserdata(L, funcPtr);
-			lua_pushcclosure(L, &lua_function_void_1args<P1>, 1);
+			lua_pushstring(L, funcName);
+			lua_pushcclosure(L, &lua_function_void_1args<P1>, 2);
 			lua_setglobal(L, funcName);
 		}
 		
@@ -75,7 +76,8 @@ namespace prototype
 			lua_State* L = getLuaState();
 
 			lua_pushlightuserdata(L, funcPtr);
-			lua_pushcclosure(L, &lua_function_void_2args<P1, P2>, 1);
+			lua_pushstring(L, funcName);
+			lua_pushcclosure(L, &lua_function_void_2args<P1, P2>, 2);
 			lua_setglobal(L, funcName);
 		}
 		
@@ -85,7 +87,8 @@ namespace prototype
 			lua_State* L = getLuaState();
 
 			lua_pushlightuserdata(L, funcPtr);
-			lua_pushcclosure(L, &lua_function_void_3args<P1, P2, P3>, 1);
+			lua_pushstring(L, funcName);
+			lua_pushcclosure(L, &lua_function_void_3args<P1, P2, P3>, 2);
 			lua_setglobal(L, funcName);
 		}
 		
@@ -95,7 +98,8 @@ namespace prototype
 			lua_State* L = getLuaState();
 
 			lua_pushlightuserdata(L, funcPtr);
-			lua_pushcclosure(L, &lua_function_void_4args<P1, P2, P3, P4>, 1);
+			lua_pushstring(L, funcName);
+			lua_pushcclosure(L, &lua_function_void_4args<P1, P2, P3, P4>, 2);
 			lua_setglobal(L, funcName);
 		}
 
@@ -105,7 +109,8 @@ namespace prototype
 			lua_State* L = getLuaState();
 
 			lua_pushlightuserdata(L, funcPtr);
-			lua_pushcclosure(L, &lua_function_R_0args<R>, 1);
+			lua_pushstring(L, funcName);
+			lua_pushcclosure(L, &lua_function_R_0args<R>, 2);
 			lua_setglobal(L, funcName);
 		}
 		
@@ -115,7 +120,8 @@ namespace prototype
 			lua_State* L = getLuaState();
 
 			lua_pushlightuserdata(L, funcPtr);
-			lua_pushcclosure(L, &lua_function_R_1args<R, P1>, 1);
+			lua_pushstring(L, funcName);
+			lua_pushcclosure(L, &lua_function_R_1args<R, P1>, 2);
 			lua_setglobal(L, funcName);
 		}
 		
@@ -125,7 +131,8 @@ namespace prototype
 			lua_State* L = getLuaState();
 
 			lua_pushlightuserdata(L, funcPtr);
-			lua_pushcclosure(L, &lua_function_R_2args<R, P1, P2>, 1);
+			lua_pushstring(L, funcName);
+			lua_pushcclosure(L, &lua_function_R_2args<R, P1, P2>, 2);
 			lua_setglobal(L, funcName);
 		}
 
@@ -135,7 +142,8 @@ namespace prototype
 			lua_State* L = getLuaState();
 
 			lua_pushlightuserdata(L, funcPtr);
-			lua_pushcclosure(L, &lua_function_R_3args<R, P1, P2, P3>, 1);
+			lua_pushstring(L, funcName);
+			lua_pushcclosure(L, &lua_function_R_3args<R, P1, P2, P3>, 2);
 			lua_setglobal(L, funcName);
 		}
 		
@@ -145,7 +153,8 @@ namespace prototype
 			lua_State* L = getLuaState();
 
 			lua_pushlightuserdata(L, funcPtr);
-			lua_pushcclosure(L, &lua_function_R_4args<R, P1, P2, P3, P4>, 1);
+			lua_pushstring(L, funcName);
+			lua_pushcclosure(L, &lua_function_R_4args<R, P1, P2, P3, P4>, 2);
 			lua_setglobal(L, funcName);
 		}
 	};

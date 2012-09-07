@@ -114,6 +114,10 @@ namespace prototype
 					ScriptReference* refValue = reinterpret_cast<ScriptReference*>(userdata);
 					value = dynamic_cast<Clazz*>(refValue);
 					ok = value != NULL;
+					if(!ok)
+					{
+						std::cerr << "Cannot cast pointer to: " << typeid(Clazz).name() << std::endl;
+					}
 				}
 				lua_pop(L, 1);
 			}
