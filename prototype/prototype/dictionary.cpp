@@ -177,4 +177,130 @@ namespace prototype
 
 		return *this;
 	}
+
+	DictionaryIterator Dictionary::getIterator() const
+	{
+		return DictionaryIterator(mCurrentState, mScriptRef);
+	}
+
+	DictionaryIterator::DictionaryIterator()
+		: mScriptRef(0), mCurrentState(NULL), mNumPopsRequired(0)
+	{
+	}
+	
+	DictionaryIterator::DictionaryIterator(lua_State* L, int scriptRef)
+		: mScriptRef(scriptRef), mCurrentState(L), mNumPopsRequired(0)
+	{
+		if(mScriptRef > 0)
+		{
+			lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+			lua_pushnil(mCurrentState);
+			mNumPopsRequired = 2;
+		}
+	}
+
+	DictionaryIterator::DictionaryIterator(const DictionaryIterator& it)
+		: mScriptRef(it.mScriptRef), mCurrentState(it.mCurrentState), mNumPopsRequired(0)
+	{
+		if(mScriptRef > 0)
+		{
+			lua_rawgeti(mCurrentState, LUA_REGISTRYINDEX, mScriptRef);
+			lua_pushnil(mCurrentState);	
+			mNumPopsRequired = 2;
+		}
+	}
+
+	DictionaryIterator::~DictionaryIterator()
+	{
+		if(mScriptRef > 0)
+		{
+			lua_pop(mCurrentState, mNumPopsRequired);
+			mScriptRef = 0;
+		}
+	}
+
+	bool DictionaryIterator::hasNext()
+	{
+		if(mScriptRef <= 0)
+			return false;
+
+		if(mNumPopsRequired > 2)
+			lua_pop(mCurrentState, 1);
+		
+		bool next = lua_next(mCurrentState, -2) != 0;
+		if(next)
+			mNumPopsRequired++;
+
+		return next;
+	}
+
+	std::string DictionaryIterator::getKey() const
+	{
+		assert(mScriptRef > 0 && "This iterator instance is corrupter. Are you sure that hasNext() returned true?");
+		std::string key = lua_tostring(mCurrentState, -2);
+		return key;
+	}
+
+	std::string DictionaryIterator::getString()
+	{
+		assert(mScriptRef > 0 && "This iterator instance is corrupter. Are you sure that hasNext() returned true?");
+		std::string val = lua_tostring(mCurrentState, -1);
+		lua_pop(mCurrentState, 1);
+		mNumPopsRequired--;
+		return val;
+	}
+
+	double DictionaryIterator::getDouble()
+	{
+		assert(mScriptRef > 0 && "This iterator instance is corrupter. Are you sure that hasNext() returned true?");
+		double val = lua_tonumber(mCurrentState, -1);
+		lua_pop(mCurrentState, 1);
+		mNumPopsRequired--;
+		return val;
+	}
+
+	float DictionaryIterator::getFloat()
+	{
+		assert(mScriptRef > 0 && "This iterator instance is corrupter. Are you sure that hasNext() returned true?");
+		float val = (float)lua_tonumber(mCurrentState, -1);
+		lua_pop(mCurrentState, 1);
+		mNumPopsRequired--;
+		return val;
+	}
+
+	int DictionaryIterator::getInt()
+	{
+		assert(mScriptRef > 0 && "This iterator instance is corrupter. Are you sure that hasNext() returned true?");
+		int val = lua_tointeger(mCurrentState, -1);
+		lua_pop(mCurrentState, 1);
+		mNumPopsRequired--;
+		return val;
+	}
+
+	bool DictionaryIterator::getBool()
+	{
+		assert(mScriptRef > 0 && "This iterator instance is corrupter. Are you sure that hasNext() returned true?");
+		bool val = lua_toboolean(mCurrentState, -1) != 0;
+		lua_pop(mCurrentState, 1);
+		mNumPopsRequired--;
+		return val;
+	}
+
+	ScriptObject* DictionaryIterator::getPointer()
+	{
+		assert(mScriptRef > 0 && "This iterator instance is corrupter. Are you sure that hasNext() returned true?");
+		ScriptObject* ptr = NULL;
+		script_value<ScriptObject*>::pop(mCurrentState, ptr);
+		mNumPopsRequired--;
+		return ptr;
+	}
+
+	Dictionary DictionaryIterator::getDictionary()
+	{
+		assert(mScriptRef > 0 && "This iterator instance is corrupter. Are you sure that hasNext() returned true?");
+		Dictionary dict;
+		script_value<Dictionary>::pop(mCurrentState, dict);
+		mNumPopsRequired--;
+		return dict;
+	}
 }

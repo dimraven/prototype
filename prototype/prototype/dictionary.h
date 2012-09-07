@@ -13,6 +13,46 @@ extern "C"
 namespace prototype
 {
 	class ScriptObject;
+	class Dictionary;
+
+	class DictionaryIterator
+	{
+	public:
+		DictionaryIterator();
+
+	public:
+		DictionaryIterator(lua_State* L, int scriptRef);
+		DictionaryIterator(const DictionaryIterator& it);
+		~DictionaryIterator();
+
+		//
+		// Checks if any more items exists in this dictionary and pushes the iterator one step forward
+		// @return TRUE if more elements are found; FALSE otherwise.
+		bool hasNext();
+
+		//
+		// @return The key for the current item in the dictionary list
+		std::string getKey() const;
+
+		std::string getString();
+
+		double getDouble();
+
+		float getFloat();
+
+		int getInt();
+		
+		bool getBool();
+
+		ScriptObject* getPointer();
+
+		Dictionary getDictionary();
+
+	private:
+		int mScriptRef;
+		lua_State* mCurrentState;
+		int mNumPopsRequired;
+	};
 
 	//
 	// Class which represents a script dictionary. Example:
@@ -67,6 +107,10 @@ namespace prototype
 		Dictionary getDictionary(const char* key) const;
 
 		//
+		// @return An iterator for this dictionary.
+		DictionaryIterator getIterator() const;
+
+		//
 		// @return The associated script-table reference ID. This is unique between all instances as long as it's alive.
 		//		It might be recycled when released.
 		inline int getId() const {
@@ -74,7 +118,7 @@ namespace prototype
 		}
 
 		//
-		//
+		// Assignment operator
 		Dictionary& operator=(const Dictionary& other);
 
 	private:
