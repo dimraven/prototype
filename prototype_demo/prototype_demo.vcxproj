@@ -40,14 +40,14 @@
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)out\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
-    <IncludePath>../lib/lua/lua-5.2.1/src;../prototype;$(IncludePath)</IncludePath>
+    <IncludePath>../lib/lua/lua-5.2.1/include;../prototype;$(IncludePath)</IncludePath>
     <LibraryPath>../lib/lua/lua-5.2.1/lib;../bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)out\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>../lib/lua/lua-5.2.1/src;../prototype;$(IncludePath)</IncludePath>
+    <IncludePath>../lib/lua/lua-5.2.1/include;../prototype;$(IncludePath)</IncludePath>
     <LibraryPath>../lib/lua/lua-5.2.1/lib;../bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

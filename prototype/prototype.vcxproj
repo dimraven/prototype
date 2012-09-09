@@ -66,14 +66,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)_d</TargetName>
-    <IncludePath>../lib/lua/lua-5.2.1/src;$(IncludePath)</IncludePath>
+    <IncludePath>../lib/lua/lua-5.2.1/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>$(SolutionDir)out\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>../lib/lua/lua-5.2.1/src;$(IncludePath)</IncludePath>
+    <IncludePath>../lib/lua/lua-5.2.1/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
