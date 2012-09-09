@@ -41,12 +41,14 @@ It gives us power of rapid development before the optimization stage (where we m
 
 The project **prototype_demo** demonstrates how to use the following features:
 
-* Inheritance by having to three levels of classes: "ScriptObject -> DrawableObject -> GameObject"
-* Extending methods from LUA scripts by creating a GameObject specialization found in **ship.lua**
-* Creating custom behaviours defined in the script code and bind them to game objects
+* Binding of C/C++ functions.
+* Binding of C++ classes with inheritance
+* Creating new "classes" from script by inheriting C++ bound classes.
+* Overloading bound C++ methods from script
+* Handling dictionaries and iterators
+* Error handling when trying to call deleted objects
+* Error handling when trying to call functions with bad ScriptObject* parameters.
 
 ### Credits ###
 
 http://www.lua.org - The Programming Language Lua.
-
-http://www.glfw.org - An OpenGL Library
