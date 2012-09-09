@@ -321,6 +321,13 @@ namespace prototype
 	prototype::ClassDefinitionImpl<Clazz> Clazz::gClassDef(#Clazz, Parent::getStaticClassDef());
 #endif
 
+#ifndef IMPLEMENT_SCRIPT_CLASS_WITH_NAME
+#define IMPLEMENT_SCRIPT_CLASS_WITH_NAME(Clazz, ClazzName, Parent) \
+	prototype::ClassDefinition* Clazz::getClassDef() const { return &Clazz::gClassDef; } \
+	prototype::ClassDefinitionImpl<Clazz>* Clazz::getStaticClassDef() { return &Clazz::gClassDef; } \
+	prototype::ClassDefinitionImpl<Clazz> Clazz::gClassDef(ClazzName, Parent::getStaticClassDef());
+#endif
+
 #ifndef DEFINE_SCRIPT_CLASS
 #define DEFINE_SCRIPT_CLASS(Clazz) \
 	virtual prototype::ClassDefinition* getClassDef() const; \
