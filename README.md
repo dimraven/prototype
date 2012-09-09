@@ -7,8 +7,8 @@ A library for prototyping c++ class using Lua (from Lua's point of view).
 The installation notes and source projects are only available for Windows and for Visual Studio 2010 at the moment.
 More will come soon (I've planned on making support for Dev-C++ and probably xcode). 
 
-The script engine requires Lua 5.2.1. Read lib/lua/README.txt for information about this.
-The demo application requires GLFW (A OpenGL wrapper library). Read lib/glfw/README.txt for information abou this.
+Simply open the **prototype** project and build whatever version if it that you want. (Works
+only using Visual Studio 2010 at the moment)
 
 ### What is prototype ###
 
